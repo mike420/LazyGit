@@ -9,7 +9,7 @@ internal static class FireplaceAwakePatch
 {
     private static void Postfix(Fireplace __instance)
     {
-        FuelKeeper.Track(__instance);
+        Safe.Run("FuelKeeper.Track", () => FuelKeeper.Track(__instance));
     }
 }
 
@@ -27,7 +27,7 @@ internal static class SmelterAwakePatch
 {
     private static void Postfix(Smelter __instance)
     {
-        StationKeeper.Track(__instance);
+        Safe.Run("StationKeeper.Track", () => StationKeeper.Track(__instance));
     }
 }
 
@@ -36,7 +36,7 @@ internal static class CookingStationAwakePatch
 {
     private static void Postfix(CookingStation __instance)
     {
-        CookingKeeper.Track(__instance);
+        Safe.Run("CookingKeeper.Track", () => CookingKeeper.Track(__instance));
     }
 }
 
@@ -45,7 +45,7 @@ internal static class FermenterAwakePatch
 {
     private static void Postfix(Fermenter __instance)
     {
-        FermentKeeper.Track(__instance);
+        Safe.Run("FermentKeeper.Track", () => FermentKeeper.Track(__instance));
     }
 }
 
@@ -54,7 +54,7 @@ internal static class TurretAwakePatch
 {
     private static void Postfix(Turret __instance)
     {
-        BallistaKeeper.Track(__instance);
+        Safe.Run("BallistaKeeper.Track", () => BallistaKeeper.Track(__instance));
     }
 }
 
@@ -63,7 +63,7 @@ internal static class ShieldGeneratorStartPatch
 {
     private static void Postfix(ShieldGenerator __instance)
     {
-        ShieldGeneratorKeeper.Track(__instance);
+        Safe.Run("ShieldGeneratorKeeper.Track", () => ShieldGeneratorKeeper.Track(__instance));
     }
 }
 
@@ -72,7 +72,7 @@ internal static class DoorAwakePatch
 {
     private static void Postfix(Door __instance)
     {
-        DoorKeeper.Track(__instance);
+        Safe.Run("DoorKeeper.Track", () => DoorKeeper.Track(__instance));
     }
 }
 
@@ -81,7 +81,7 @@ internal static class WearNTearAwakePatch
 {
     private static void Postfix(WearNTear __instance)
     {
-        RepairKeeper.Track(__instance);
+        Safe.Run("RepairKeeper.Track", () => RepairKeeper.Track(__instance));
     }
 }
 
@@ -90,7 +90,7 @@ internal static class BeehiveAwakePatch
 {
     private static void Postfix(Beehive __instance)
     {
-        CollectKeeper.Track(__instance);
+        Safe.Run("CollectKeeper.Track", () => CollectKeeper.Track(__instance));
     }
 }
 
@@ -99,7 +99,7 @@ internal static class SapCollectorAwakePatch
 {
     private static void Postfix(SapCollector __instance)
     {
-        CollectKeeper.Track(__instance);
+        Safe.Run("CollectKeeper.Track", () => CollectKeeper.Track(__instance));
     }
 }
 
@@ -109,7 +109,7 @@ internal static class CraftingStationInteractPatch
 {
     private static void Postfix(CraftingStation __instance, Humanoid user, bool repeat)
     {
-        GearRepair.OnStationUsed(__instance, user, repeat);
+        Safe.Run("GearRepair.OnStationUsed", () => GearRepair.OnStationUsed(__instance, user, repeat));
     }
 }
 
@@ -119,7 +119,7 @@ internal static class HumanoidEquipItemPatch
 {
     private static void Postfix(Humanoid __instance)
     {
-        ShieldKeeper.OnEquipmentChanged(__instance);
+        Safe.Run("ShieldKeeper.OnEquipmentChanged", () => ShieldKeeper.OnEquipmentChanged(__instance));
     }
 }
 
@@ -128,12 +128,12 @@ internal static class HumanoidUnequipItemPatch
 {
     private static void Prefix(Humanoid __instance, ItemDrop.ItemData item)
     {
-        ShieldKeeper.BeforeUnequip(__instance, item);
+        Safe.Run("ShieldKeeper.BeforeUnequip", () => ShieldKeeper.BeforeUnequip(__instance, item));
     }
 
     private static void Postfix(Humanoid __instance)
     {
-        ShieldKeeper.OnEquipmentChanged(__instance);
+        Safe.Run("ShieldKeeper.OnEquipmentChanged", () => ShieldKeeper.OnEquipmentChanged(__instance));
     }
 }
 
@@ -142,7 +142,7 @@ internal static class HumanoidHideHandItemsPatch
 {
     private static void Postfix(Humanoid __instance, bool onlyRightHand)
     {
-        ShieldKeeper.OnHandsHidden(__instance, onlyRightHand);
+        Safe.Run("ShieldKeeper.OnHandsHidden", () => ShieldKeeper.OnHandsHidden(__instance, onlyRightHand));
     }
 }
 
@@ -151,12 +151,12 @@ internal static class HumanoidShowHandItemsPatch
 {
     private static void Prefix(Humanoid __instance, bool onlyRightHand)
     {
-        ShieldKeeper.BeforeHandsShown(__instance, onlyRightHand);
+        Safe.Run("ShieldKeeper.BeforeHandsShown", () => ShieldKeeper.BeforeHandsShown(__instance, onlyRightHand));
     }
 
     private static void Postfix(Humanoid __instance, bool onlyRightHand)
     {
-        ShieldKeeper.OnHandsShown(__instance, onlyRightHand);
+        Safe.Run("ShieldKeeper.OnHandsShown", () => ShieldKeeper.OnHandsShown(__instance, onlyRightHand));
     }
 }
 
@@ -165,7 +165,7 @@ internal static class AttackTriggerPatch
 {
     private static void Prefix(Attack __instance)
     {
-        ShieldKeeper.OnAttackTrigger(__instance);
+        Safe.Run("ShieldKeeper.OnAttackTrigger", () => ShieldKeeper.OnAttackTrigger(__instance));
     }
 }
 
@@ -176,7 +176,7 @@ internal static class DestructibleDestroyPatch
 {
     private static void Prefix(Destructible __instance)
     {
-        TreeKeeper.OnDestroyed(__instance);
+        Safe.Run("TreeKeeper.OnDestroyed", () => TreeKeeper.OnDestroyed(__instance));
     }
 }
 
@@ -185,7 +185,7 @@ internal static class TreeBaseSpawnLogPatch
 {
     private static void Prefix(TreeBase __instance)
     {
-        TreeKeeper.SetStumpLifetime(__instance);
+        Safe.Run("TreeKeeper.SetStumpLifetime", () => TreeKeeper.SetStumpLifetime(__instance));
     }
 }
 
@@ -209,13 +209,13 @@ internal static class ZNetSceneAwakePatch
     {
         MainConfig.Batch(() =>
         {
-            FuelKeeper.ListFireKinds(__instance);
-            StationKeeper.ListStationKinds(__instance);
-            CookingKeeper.ListKinds(__instance);
-            FermentKeeper.ListKinds(__instance);
-            BallistaKeeper.ListKinds(__instance);
-            ShieldGeneratorKeeper.ListKinds(__instance);
-            DoorKeeper.ListKinds(__instance);
+            Safe.Run("FuelKeeper.ListFireKinds", () => FuelKeeper.ListFireKinds(__instance));
+            Safe.Run("StationKeeper.ListStationKinds", () => StationKeeper.ListStationKinds(__instance));
+            Safe.Run("CookingKeeper.ListKinds", () => CookingKeeper.ListKinds(__instance));
+            Safe.Run("FermentKeeper.ListKinds", () => FermentKeeper.ListKinds(__instance));
+            Safe.Run("BallistaKeeper.ListKinds", () => BallistaKeeper.ListKinds(__instance));
+            Safe.Run("ShieldGeneratorKeeper.ListKinds", () => ShieldGeneratorKeeper.ListKinds(__instance));
+            Safe.Run("DoorKeeper.ListKinds", () => DoorKeeper.ListKinds(__instance));
         });
     }
 }

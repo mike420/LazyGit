@@ -179,7 +179,7 @@ internal static class FermentKeeper
 
         Localization text = Localization.instance;
         string pieceName = text != null ? text.Localize(piece.m_name) : prefabName;
-        setting = MainConfig.File.Bind(KindSection, prefabName, true, $"{pieceName} is filled from nearby chests, and what is ready is tapped into a chest.");
+        setting = MainConfig.File.Bind(MainConfig.Section(KindSection), prefabName, true, $"{pieceName} is filled from nearby chests, and what is ready is tapped into a chest.");
         kinds[prefabName] = setting;
         return setting;
     }

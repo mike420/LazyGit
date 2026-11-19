@@ -60,16 +60,16 @@ public class LazyGitMod : BaseUnityPlugin
         // The mod can be loaded while a world is already running: pick up what is there
         MainConfig.Batch(() =>
         {
-            ChestIndex.TrackExisting();
-            FuelKeeper.TrackExisting();
-            StationKeeper.TrackExisting();
-            CookingKeeper.TrackExisting();
-            FermentKeeper.TrackExisting();
-            BallistaKeeper.TrackExisting();
-            ShieldGeneratorKeeper.TrackExisting();
-            DoorKeeper.TrackExisting();
-            RepairKeeper.TrackExisting();
-            CollectKeeper.TrackExisting();
+            Safe.Run("ChestIndex.TrackExisting", ChestIndex.TrackExisting);
+            Safe.Run("FuelKeeper.TrackExisting", FuelKeeper.TrackExisting);
+            Safe.Run("StationKeeper.TrackExisting", StationKeeper.TrackExisting);
+            Safe.Run("CookingKeeper.TrackExisting", CookingKeeper.TrackExisting);
+            Safe.Run("FermentKeeper.TrackExisting", FermentKeeper.TrackExisting);
+            Safe.Run("BallistaKeeper.TrackExisting", BallistaKeeper.TrackExisting);
+            Safe.Run("ShieldGeneratorKeeper.TrackExisting", ShieldGeneratorKeeper.TrackExisting);
+            Safe.Run("DoorKeeper.TrackExisting", DoorKeeper.TrackExisting);
+            Safe.Run("RepairKeeper.TrackExisting", RepairKeeper.TrackExisting);
+            Safe.Run("CollectKeeper.TrackExisting", CollectKeeper.TrackExisting);
         });
     }
 
@@ -77,7 +77,7 @@ public class LazyGitMod : BaseUnityPlugin
     {
         if (MainConfig.modEnabled.Value)
         {
-            ShieldKeeper.Update();
+            Safe.Run("ShieldKeeper.Update", ShieldKeeper.Update);
         }
 
         if (!MainConfig.modEnabled.Value || Player.m_localPlayer == null || ZNet.instance == null || Time.timeScale == 0f || Time.unscaledTime < nextChores)
@@ -86,43 +86,43 @@ public class LazyGitMod : BaseUnityPlugin
         }
         nextChores = Time.unscaledTime + ChoreInterval;
 
-        Ownership.Prune();
-        ChestIndex.NewRound();
+        Safe.Run("Ownership.Prune", Ownership.Prune);
+        Safe.Run("ChestIndex.NewRound", ChestIndex.NewRound);
         if (MainConfig.fuelEnabled.Value)
         {
-            FuelKeeper.DoRound();
+            Safe.Run("FuelKeeper.DoRound", FuelKeeper.DoRound);
         }
         if (MainConfig.stationEnabled.Value)
         {
-            StationKeeper.DoRound();
+            Safe.Run("StationKeeper.DoRound", StationKeeper.DoRound);
         }
         if (MainConfig.cookingEnabled.Value)
         {
-            CookingKeeper.DoRound();
+            Safe.Run("CookingKeeper.DoRound", CookingKeeper.DoRound);
         }
         if (MainConfig.fermentEnabled.Value)
         {
-            FermentKeeper.DoRound();
+            Safe.Run("FermentKeeper.DoRound", FermentKeeper.DoRound);
         }
         if (MainConfig.ballistaEnabled.Value)
         {
-            BallistaKeeper.DoRound();
+            Safe.Run("BallistaKeeper.DoRound", BallistaKeeper.DoRound);
         }
         if (MainConfig.generatorEnabled.Value)
         {
-            ShieldGeneratorKeeper.DoRound();
+            Safe.Run("ShieldGeneratorKeeper.DoRound", ShieldGeneratorKeeper.DoRound);
         }
         if (MainConfig.doorEnabled.Value)
         {
-            DoorKeeper.DoRound();
+            Safe.Run("DoorKeeper.DoRound", DoorKeeper.DoRound);
         }
         if (MainConfig.repairEnabled.Value)
         {
-            RepairKeeper.DoRound();
+            Safe.Run("RepairKeeper.DoRound", RepairKeeper.DoRound);
         }
         if (MainConfig.collectEnabled.Value)
         {
-            CollectKeeper.DoRound();
+            Safe.Run("CollectKeeper.DoRound", CollectKeeper.DoRound);
         }
     }
 
