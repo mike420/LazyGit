@@ -65,6 +65,38 @@ internal static class ChestIndex
         return taken;
     }
 
+    // Puts up to 'amount' of an item (its prefab) into the chests within 'range' of 'at'. A chest that already holds
+    // the item is used first, then the nearest. Returns how many were put in; what does not fit is left with the caller.
+    public static int Put(Vector3 at, float range, GameObject prefab, int amount)
+    {
+        ItemDrop drop = prefab != null ? prefab.GetComponent<ItemDrop>() : null;
+        if (drop == null)
+        {
+            return 0;
+        }
+        string itemName = drop.m_itemData.m_shared.m_name;
+        float maxSqr = range * range;
+        int put = 0;
+        foreach (Container chest in Usable()
+            .Select(c => (chest: c, sqr: (c.transform.position - at).sqrMagnitude))
+            .Where(c => c.sqr <= maxSqr)
+            .OrderBy(c => c.chest.GetInventory().CountItems(itemName, -1, false) > 0 ? 0 : 1)
+            .ThenBy(c => c.sqr)
+            .Select(c => c.chest))
+        {
+            Inventory inventory = chest.GetInventory();
+            while (put < amount && inventory.CanAddItem(prefab, 1) && inventory.AddItem(prefab, 1))
+            {
+                put++;
+            }
+            if (put >= amount)
+            {
+                break;
+            }
+        }
+        return put;
+    }
+
     private static List<Container> Usable()
     {
         return usableThisRound ??= PickUsable();

@@ -24,6 +24,13 @@ internal static class MainConfig
     public static ConfigEntry<bool> stationEnabled;
     public static ConfigEntry<float> stationChestRange;
 
+    // Auto Cooking
+    public static ConfigEntry<bool> cookingEnabled;
+    public static ConfigEntry<float> cookingChestRange;
+    public static ConfigEntry<bool> cookingLoad;
+    public static ConfigEntry<bool> cookingTakeDone;
+    public static ConfigEntry<bool> cookingToChests;
+
     public static void Init(ConfigFile config)
     {
         File = config;
@@ -38,6 +45,12 @@ internal static class MainConfig
 
         stationEnabled = config.BindConfigInOrder("Auto Stations", "Enable Auto Stations", defaultValue: true, "Smelters, blast furnaces, charcoal kilns, spinning wheels, windmills and eitr refineries you built are kept stocked with their fuel and raw material from your chests.", synced: false, sectionOrder: true, settingOrder: true);
         stationChestRange = config.BindConfigInOrder("Auto Stations", "Chest Range", defaultValue: 30f, "A station takes what it needs from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+
+        cookingEnabled = config.BindConfigInOrder("Auto Cooking", "Enable Auto Cooking", defaultValue: true, "Cooking stations and grills you built are loaded with raw food from your chests, kept in fuel where they burn any, and the food that is done is taken off before it burns. (Ovens are Auto Stations.)", synced: false, sectionOrder: true, settingOrder: true);
+        cookingChestRange = config.BindConfigInOrder("Auto Cooking", "Chest Range", defaultValue: 30f, "A cooking station takes what it needs from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        cookingLoad = config.BindConfigInOrder("Auto Cooking", "Load Raw Food", defaultValue: true, "Raw food from the chests is put on the station while its fire is lit.", synced: false, sectionOrder: true, settingOrder: true);
+        cookingTakeDone = config.BindConfigInOrder("Auto Cooking", "Take Off Cooked Food", defaultValue: true, "Food that is done is taken off before it burns.", synced: false, sectionOrder: true, settingOrder: true);
+        cookingToChests = config.BindConfigInOrder("Auto Cooking", "Put Cooked Food In Chests", defaultValue: true, "Cooked food goes into a chest within range (one that already has some first, then the nearest). If no chest has room, or this is Off, it is dropped beside the station.", synced: false, sectionOrder: true, settingOrder: true);
 
         CarryOverOldSections(config);
 

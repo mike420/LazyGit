@@ -43,6 +43,7 @@ public class LazyGitMod : BaseUnityPlugin
         ChestIndex.TrackExisting();
         FuelKeeper.TrackExisting();
         StationKeeper.TrackExisting();
+        CookingKeeper.TrackExisting();
     }
 
     public void Update()
@@ -61,6 +62,10 @@ public class LazyGitMod : BaseUnityPlugin
         if (MainConfig.stationEnabled.Value)
         {
             StationKeeper.DoRound();
+        }
+        if (MainConfig.cookingEnabled.Value)
+        {
+            CookingKeeper.DoRound();
         }
     }
 

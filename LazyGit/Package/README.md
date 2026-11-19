@@ -26,6 +26,14 @@ More chores will follow in later updates: the aim is that everything tedious in 
   * A **switch for each kind of station**, listed in the settings once you are in a world.
   * Same rules as Auto Fuel: only what **you built**, only your chests, and it works in multiplayer.
 
+### 🍖 Auto Cooking
+
+  * Cooking stations, iron cooking stations and grills are **loaded with raw food** from your chests while their fire is lit.
+  * Where they burn fuel, it is topped up from the chests too.
+  * Food that is **done is taken off** before it can burn and put **into a chest** (one that already holds some first, then the nearest). If no chest has room, it is dropped beside the station.
+  * Ovens are looked after by Auto Stations.
+  * A **switch for each kind of cooking station**, and the same rules as the other chores: only what you built, only your chests.
+
 <br>
 
 ## ⚙️ Settings:
@@ -44,6 +52,12 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Enable Auto Stations | On | Stations are kept stocked from your chests. |
 | Chest Range (Auto Stations) | 30 | Stations take from chests up to this many metres away. |
 | Station Types | On | One switch for each kind of station. |
+| Enable Auto Cooking | On | Cooking stations are loaded and emptied automatically. |
+| Chest Range (Auto Cooking) | 30 | Cooking stations take from chests up to this many metres away. |
+| Load Raw Food | On | Raw food from the chests is put on the station while its fire is lit. |
+| Take Off Cooked Food | On | Done food is taken off before it burns. |
+| Put Cooked Food In Chests | On | Taken-off food goes into a chest in range; if none has room, or Off, it is dropped beside the station. |
+| Cooking Station Types | On | One switch for each kind of cooking station. |
 
 <br>
 

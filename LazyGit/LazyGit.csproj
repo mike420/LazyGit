@@ -57,6 +57,7 @@
     <Compile Include="Automation\ChestIndex.cs" />
     <Compile Include="Automation\FuelKeeper.cs" />
     <Compile Include="Automation\StationKeeper.cs" />
+    <Compile Include="Automation\CookingKeeper.cs" />
     <Compile Include="..\Shared\ModSettings\*.cs">
       <Link>ModSettings\%(Filename)%(Extension)</Link>
     </Compile>

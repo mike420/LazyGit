@@ -31,6 +31,15 @@ internal static class SmelterAwakePatch
     }
 }
 
+[HarmonyPatch(typeof(CookingStation), "Awake")]
+internal static class CookingStationAwakePatch
+{
+    private static void Postfix(CookingStation __instance)
+    {
+        CookingKeeper.Track(__instance);
+    }
+}
+
 // Every kind of fire and station gets its own on/off setting, listed once the game knows all its pieces
 [HarmonyPatch(typeof(ZNetScene), "Awake")]
 internal static class ZNetSceneAwakePatch
@@ -39,5 +48,6 @@ internal static class ZNetSceneAwakePatch
     {
         FuelKeeper.ListFireKinds(__instance);
         StationKeeper.ListStationKinds(__instance);
+        CookingKeeper.ListKinds(__instance);
     }
 }
