@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reflection;
 using BepInEx;
 using HarmonyLib;
@@ -41,7 +42,20 @@ public class LazyGitMod : BaseUnityPlugin
         }
 
         Translations.Load(this);
-        harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), PluginGUID);
+        // Each patch on its own: if the game has changed and one does not fit, that one is reported and left out, and
+        // the rest of the mod still works
+        harmony = new Harmony(PluginGUID);
+        foreach (System.Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsDefined(typeof(HarmonyPatch), true)))
+        {
+            try
+            {
+                harmony.CreateClassProcessor(type).Patch();
+            }
+            catch (System.Exception e)
+            {
+                Logger.LogError($"Could not apply the patch {type.Name}: {e.Message}");
+            }
+        }
 
         // The mod can be loaded while a world is already running: pick up what is there
         MainConfig.Batch(() =>

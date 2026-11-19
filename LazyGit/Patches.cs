@@ -58,8 +58,8 @@ internal static class TurretAwakePatch
     }
 }
 
-[HarmonyPatch(typeof(ShieldGenerator), "Awake")]
-internal static class ShieldGeneratorAwakePatch
+[HarmonyPatch(typeof(ShieldGenerator), "Start")]
+internal static class ShieldGeneratorStartPatch
 {
     private static void Postfix(ShieldGenerator __instance)
     {

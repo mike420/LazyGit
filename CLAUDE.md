@@ -50,6 +50,7 @@ Plain `dotnet build` cannot resolve the game references. The game's log is `D:\S
 - Fires: `Fireplace` (`m_fuelItem`, `m_maxFuel`, `m_infiniteFuel`, `m_canRefill`), fuel in the ZDO (`ZDOVars.s_fuel`); add fuel with `nview.InvokeRPC("RPC_AddFuelAmount", float)`. Only the fire's owner feeds it (no double fills in multiplayer); only `Piece.IsPlacedByPlayer()` fires.
 - Chests: `Container` (`m_privacy` Public/Private/Group, `m_wagon`, `m_checkGuardStone`, `IsInUse()`); take with `Inventory.RemoveItem(name, n, -1, false)` (the container saves itself when changed, if we own it); a chest owned by someone else is `ClaimOwnership()`ed and used next round.
 - Many per-kind settings are bound at once: wrap them in `MainConfig.Batch` (one save of the cfg file, not one each).
+- Patches are applied one class at a time (a bad one is logged as "Could not apply the patch ..." and the rest still work). **Before adding a `[HarmonyPatch(typeof(X), "Method")]`, check the method exists in the decompiled game type**: `ShieldGenerator` has no `Awake` (it uses `Start`), which stopped every patch in the first test.
 - Tracking: Harmony postfixes on `Awake` keep our own sets of fires and chests, so a round never searches the scene.
 
 ## Status
