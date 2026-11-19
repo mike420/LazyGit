@@ -61,6 +61,7 @@
     <Compile Include="Automation\CookingKeeper.cs" />
     <Compile Include="Automation\FermentKeeper.cs" />
     <Compile Include="Automation\BallistaKeeper.cs" />
+    <Compile Include="Automation\ShieldGeneratorKeeper.cs" />
     <Compile Include="Automation\DoorKeeper.cs" />
     <Compile Include="Automation\RepairKeeper.cs" />
     <Compile Include="Automation\CollectKeeper.cs" />

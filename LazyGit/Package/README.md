@@ -60,6 +60,11 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * Filled up in one go once it is below half (a setting), from chests up to **30 m** away.
   * A **switch for each kind of ballista**, and the same rules as the other chores.
 
+### 🔮 Auto Shield Generators
+
+  * The **shield generators** you built are topped up with their fuel (**black cores**) from your chests, so the dome stays up.
+  * Filled up in one go once the fuel is below half (a setting), from chests up to **30 m** away. A **switch for each kind of generator**, and the same rules as the other chores.
+
 ### 🚪 Auto Close Doors
 
   * Doors and gates you built that are **left open** are closed again once **nobody has been near them** for 10 seconds (both settings).
@@ -130,6 +135,10 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Chest Range (Auto Ballista) | 30 | Ballistas take from chests up to this many metres away. |
 | Refill Below (Auto Ballista) | 50 | A ballista is filled up once its ammunition is below this percentage. |
 | Ballista Types | On | One switch for each kind of ballista. |
+| Enable Auto Shield Generators | On | Shield generators are topped up with fuel from your chests. |
+| Chest Range (Auto Shield Generators) | 30 | Shield generators take fuel from chests up to this many metres away. |
+| Refill Below (Auto Shield Generators) | 50 | A generator is filled up once its fuel is below this percentage. |
+| Shield Generator Types | On | One switch for each kind of shield generator. |
 | Enable Auto Close Doors | On | Open doors with nobody near them are closed. |
 | Close After | 10 | Seconds an open door has had nobody near it before it is closed. |
 | Player Distance | 6 | A door stays open while a player is within this many metres. |

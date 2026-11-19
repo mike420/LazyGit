@@ -43,6 +43,11 @@ internal static class MainConfig
     public static ConfigEntry<float> ballistaChestRange;
     public static ConfigEntry<float> ballistaRefillBelow;
 
+    // Auto Shield Generators
+    public static ConfigEntry<bool> generatorEnabled;
+    public static ConfigEntry<float> generatorChestRange;
+    public static ConfigEntry<float> generatorRefillBelow;
+
     // Auto Close Doors
     public static ConfigEntry<bool> doorEnabled;
     public static ConfigEntry<float> doorCloseAfter;
@@ -136,6 +141,10 @@ internal static class MainConfig
         ballistaEnabled = config.BindConfigInOrder("Auto Ballista", "Enable Auto Ballista", defaultValue: true, "Ballistas you built are restocked with bolts from your chests.", synced: false, sectionOrder: true, settingOrder: true);
         ballistaChestRange = config.BindConfigInOrder("Auto Ballista", "Chest Range", defaultValue: 30f, "A ballista takes ammunition from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
         ballistaRefillBelow = config.BindConfigInOrder("Auto Ballista", "Refill Below", defaultValue: 50f, "A ballista is filled up in one go once its ammunition is below this percentage of what it holds. At 100 it is topped up as soon as there is room for a bolt.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
+
+        generatorEnabled = config.BindConfigInOrder("Auto Shield Generators", "Enable Auto Shield Generators", defaultValue: true, "Shield generators you built are topped up with their fuel (black cores) from your chests.", synced: false, sectionOrder: true, settingOrder: true);
+        generatorChestRange = config.BindConfigInOrder("Auto Shield Generators", "Chest Range", defaultValue: 30f, "A shield generator takes its fuel from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        generatorRefillBelow = config.BindConfigInOrder("Auto Shield Generators", "Refill Below", defaultValue: 50f, "A shield generator is filled up in one go once its fuel is below this percentage of what it holds. At 100 it is topped up as soon as there is room for a piece of fuel.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
 
         doorEnabled = config.BindConfigInOrder("Auto Close Doors", "Enable Auto Close Doors", defaultValue: true, "Doors and gates you built that are left open are closed again once nobody is near them.", synced: false, sectionOrder: true, settingOrder: true);
         doorCloseAfter = config.BindConfigInOrder("Auto Close Doors", "Close After", defaultValue: 10f, "How many seconds an open door has had nobody near it before it is closed. (Checked every 5 seconds, so it can take a little longer.)", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 300f));

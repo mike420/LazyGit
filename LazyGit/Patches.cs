@@ -58,6 +58,15 @@ internal static class TurretAwakePatch
     }
 }
 
+[HarmonyPatch(typeof(ShieldGenerator), "Awake")]
+internal static class ShieldGeneratorAwakePatch
+{
+    private static void Postfix(ShieldGenerator __instance)
+    {
+        ShieldGeneratorKeeper.Track(__instance);
+    }
+}
+
 [HarmonyPatch(typeof(Door), "Awake")]
 internal static class DoorAwakePatch
 {
@@ -205,6 +214,7 @@ internal static class ZNetSceneAwakePatch
             CookingKeeper.ListKinds(__instance);
             FermentKeeper.ListKinds(__instance);
             BallistaKeeper.ListKinds(__instance);
+            ShieldGeneratorKeeper.ListKinds(__instance);
             DoorKeeper.ListKinds(__instance);
         });
     }
