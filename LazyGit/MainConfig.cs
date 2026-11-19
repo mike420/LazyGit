@@ -53,6 +53,13 @@ internal static class MainConfig
     public static ConfigEntry<float> repairRange;
     public static ConfigEntry<float> repairBelow;
 
+    // Auto Collect
+    public static ConfigEntry<bool> collectEnabled;
+    public static ConfigEntry<float> collectChestRange;
+    public static ConfigEntry<float> collectAt;
+    public static ConfigEntry<bool> collectHoney;
+    public static ConfigEntry<bool> collectSap;
+
     public static void Init(ConfigFile config)
     {
         File = config;
@@ -91,6 +98,12 @@ internal static class MainConfig
         repairEnabled = config.BindConfigInOrder("Auto Repair", "Enable Auto Repair", defaultValue: true, "Worn and damaged pieces you built, near you, are repaired for you, the way the hammer repairs them (which needs no materials).", synced: false, sectionOrder: true, settingOrder: true);
         repairRange = config.BindConfigInOrder("Auto Repair", "Range", defaultValue: 40f, "Pieces up to this many metres from you are repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
         repairBelow = config.BindConfigInOrder("Auto Repair", "Repair Below", defaultValue: 75f, "A piece is repaired once its health is below this percentage. At 100 every scratch is repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
+
+        collectEnabled = config.BindConfigInOrder("Auto Collect", "Enable Auto Collect", defaultValue: true, "Beehives and sap extractors you built are emptied into your chests, so you do not have to visit them.", synced: false, sectionOrder: true, settingOrder: true);
+        collectChestRange = config.BindConfigInOrder("Auto Collect", "Chest Range", defaultValue: 30f, "The honey and sap go into chests up to this many metres away (one that already has some first, then the nearest). If no chest has room, they stay in the hive or extractor.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        collectAt = config.BindConfigInOrder("Auto Collect", "Collect At", defaultValue: 100f, "A hive or extractor is emptied once it is this percentage full. At 100 it is emptied when full, so nothing is wasted.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 100f));
+        collectHoney = config.BindConfigInOrder("Auto Collect", "Collect Honey", defaultValue: true, "Beehives are emptied.", synced: false, sectionOrder: true, settingOrder: true);
+        collectSap = config.BindConfigInOrder("Auto Collect", "Collect Sap", defaultValue: true, "Sap extractors are emptied.", synced: false, sectionOrder: true, settingOrder: true);
 
         CarryOverOldSections(config);
 

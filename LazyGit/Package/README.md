@@ -58,6 +58,12 @@ More chores will follow in later updates: the aim is that everything tedious in 
   * Worn and damaged pieces **you built**, within **40 m** of you, are repaired once their health is below **75%** (both settings), the way the hammer repairs them, so it costs no materials.
   * Not in a ward you have no access to, and a badly damaged base is mended over a few rounds rather than all at once.
 
+### 🍯 Auto Collect
+
+  * **Beehives** and **sap extractors** you built are emptied **into a chest** within **30 m** (a setting): one that already holds some honey or sap first, then the nearest.
+  * Emptied when full (a setting), so nothing is wasted. If no chest has room, it stays in the hive or extractor.
+  * Honey and sap can each be switched off.
+
 <br>
 
 ## ⚙️ Settings:
@@ -99,6 +105,11 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Enable Auto Repair | On | Damaged pieces near you are repaired. |
 | Range | 40 | Pieces up to this many metres from you are repaired. |
 | Repair Below | 75 | A piece is repaired once its health is below this percentage. |
+| Enable Auto Collect | On | Beehives and sap extractors are emptied into your chests. |
+| Chest Range (Auto Collect) | 30 | The honey and sap go into chests up to this many metres away. |
+| Collect At | 100 | A hive or extractor is emptied once it is this percentage full. |
+| Collect Honey | On | Beehives are emptied. |
+| Collect Sap | On | Sap extractors are emptied. |
 
 <br>
 

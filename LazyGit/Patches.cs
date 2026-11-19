@@ -76,6 +76,24 @@ internal static class WearNTearAwakePatch
     }
 }
 
+[HarmonyPatch(typeof(Beehive), "Awake")]
+internal static class BeehiveAwakePatch
+{
+    private static void Postfix(Beehive __instance)
+    {
+        CollectKeeper.Track(__instance);
+    }
+}
+
+[HarmonyPatch(typeof(SapCollector), "Awake")]
+internal static class SapCollectorAwakePatch
+{
+    private static void Postfix(SapCollector __instance)
+    {
+        CollectKeeper.Track(__instance);
+    }
+}
+
 // Every kind of fire and station gets its own on/off setting, listed once the game knows all its pieces
 [HarmonyPatch(typeof(ZNetScene), "Awake")]
 internal static class ZNetSceneAwakePatch

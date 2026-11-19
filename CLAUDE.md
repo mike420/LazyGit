@@ -28,6 +28,7 @@ sibling mod `E:\Valheim_Mods\ValheimSkies` (use it as the reference for anything
 - `LazyGit/Automation/BallistaKeeper.cs`: Auto Ballista (every `Turret` with `m_maxAmmo` > 0: ammo in `ZDOVars.s_ammo`, one `RPC_AddAmmo(prefabName)` per bolt; a loaded turret keeps its `GetAmmoType()`, an empty one takes the first `m_allowedAmmo` the chests have; switches in "Ballista Types").
 - `LazyGit/Automation/DoorKeeper.cs`: Auto Close Doors (every `Door` with no key and not `m_canNotBeClosed`: open = `s_state` != 0; closed with `InvokeRPC("UseDoor", true)`; only the door's owner acts, or two clients would toggle it open again, so a door with no owner is never closed; switches in "Door Types").
 - `LazyGit/Automation/RepairKeeper.cs`: Auto Repair (every `WearNTear` of a player-built `Piece` within range of the player and under "Repair Below": `WearNTear.Repair()`, free like the hammer; at most 30 per round; no per-kind switches, there are too many pieces).
+- `LazyGit/Automation/CollectKeeper.cs`: Auto Collect (`Beehive` and `SapCollector`, which is not a Smelter: product built up in `ZDOVars.s_level`; when at least "Collect At" full, `ChestIndex.Put` the product (`level * Game.ScaleDrops`) and lower `s_level` by the units that went in; the game's own extract would drop it on the ground; only the owner acts).
 - `LazyGit/Translations.cs` + `Assets/Translations/<Language>/LazyGit.json`: 9 languages (English, Chinese, French, German, Polish, Portuguese_Brazilian, Russian, Spanish, Turkish). Every new message key goes in all 9.
 - `Shared/`: git submodule (`github.com/mike420/ValheimShared`), the F7 settings panel. Needs `git submodule update --init`.
 - `LazyGit/Package/`: Thunderstore README, CHANGELOG, manifest, icon (**icon.png is still a placeholder copied from ValheimSkies**). `Nexus/README.txt` is generated from the Package README by `UpdateNexusReadme.ps1` on Release builds. Add each new feature to the Package README (features + settings table) and the changelog, and bump the version.
@@ -46,6 +47,6 @@ Plain `dotnet build` cannot resolve the game references. The game's log is `D:\S
 
 ## Status
 
-Done: project set up, builds; Auto Fuel and Auto Stations (smelters, ovens, kilns, spinning wheels, windmills, eitr refineries), Auto Cooking, Auto Fermenting, Auto Ballista, Auto Close Doors, Auto Repair written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: keep the version at 1.0.0 and add new features to the 1.0.0 changelog entry until the first release.**
+Done: project set up, builds; Auto Fuel and Auto Stations (smelters, ovens, kilns, spinning wheels, windmills, eitr refineries), Auto Cooking, Auto Fermenting, Auto Ballista, Auto Close Doors, Auto Repair, Auto Collect written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: keep the version at 1.0.0 and add new features to the 1.0.0 changelog entry until the first release.**
 
-Next: test every chore in the game; then the other chore groups (sap extractors and beehives). Replace the icon.
+Next: test every chore in the game; then replace the icon. All the chore groups in the first plan are written.
