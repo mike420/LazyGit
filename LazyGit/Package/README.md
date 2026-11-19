@@ -53,6 +53,11 @@ More chores will follow in later updates: the aim is that everything tedious in 
   * Doors that need a key, and doors that cannot be closed, are left alone.
   * A **switch for each kind of door**. In multiplayer the door's owner closes it, so two players never fight over one.
 
+### 🔨 Auto Repair
+
+  * Worn and damaged pieces **you built**, within **40 m** of you, are repaired once their health is below **75%** (both settings), the way the hammer repairs them, so it costs no materials.
+  * Not in a ward you have no access to, and a badly damaged base is mended over a few rounds rather than all at once.
+
 <br>
 
 ## ⚙️ Settings:
@@ -91,6 +96,9 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Close After | 10 | Seconds an open door has had nobody near it before it is closed. |
 | Player Distance | 6 | A door stays open while a player is within this many metres. |
 | Door Types | On | One switch for each kind of door. |
+| Enable Auto Repair | On | Damaged pieces near you are repaired. |
+| Range | 40 | Pieces up to this many metres from you are repaired. |
+| Repair Below | 75 | A piece is repaired once its health is below this percentage. |
 
 <br>
 

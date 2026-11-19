@@ -16,6 +16,7 @@
             <li>Auto Fermenting: fermenters you built are filled with mead base from nearby chests, and what is ready is tapped into a chest.</li>
             <li>Auto Ballista: ballistas you built are restocked with bolts from nearby chests.</li>
             <li>Auto Close Doors: doors and gates you built that are left open are closed once nobody is near them.</li>
+            <li>Auto Repair: worn and damaged pieces you built, near you, are repaired like the hammer does.</li>
         </ul>
     </td>
   </tr>

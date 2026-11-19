@@ -67,6 +67,15 @@ internal static class DoorAwakePatch
     }
 }
 
+[HarmonyPatch(typeof(WearNTear), "Awake")]
+internal static class WearNTearAwakePatch
+{
+    private static void Postfix(WearNTear __instance)
+    {
+        RepairKeeper.Track(__instance);
+    }
+}
+
 // Every kind of fire and station gets its own on/off setting, listed once the game knows all its pieces
 [HarmonyPatch(typeof(ZNetScene), "Awake")]
 internal static class ZNetSceneAwakePatch

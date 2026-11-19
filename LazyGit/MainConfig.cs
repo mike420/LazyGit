@@ -48,6 +48,11 @@ internal static class MainConfig
     public static ConfigEntry<float> doorCloseAfter;
     public static ConfigEntry<float> doorPlayerDistance;
 
+    // Auto Repair
+    public static ConfigEntry<bool> repairEnabled;
+    public static ConfigEntry<float> repairRange;
+    public static ConfigEntry<float> repairBelow;
+
     public static void Init(ConfigFile config)
     {
         File = config;
@@ -82,6 +87,10 @@ internal static class MainConfig
         doorEnabled = config.BindConfigInOrder("Auto Close Doors", "Enable Auto Close Doors", defaultValue: true, "Doors and gates you built that are left open are closed again once nobody is near them.", synced: false, sectionOrder: true, settingOrder: true);
         doorCloseAfter = config.BindConfigInOrder("Auto Close Doors", "Close After", defaultValue: 10f, "How many seconds an open door has had nobody near it before it is closed. (Checked every 5 seconds, so it can take a little longer.)", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 300f));
         doorPlayerDistance = config.BindConfigInOrder("Auto Close Doors", "Player Distance", defaultValue: 6f, "A door is left open while any player is within this many metres of it.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 50f));
+
+        repairEnabled = config.BindConfigInOrder("Auto Repair", "Enable Auto Repair", defaultValue: true, "Worn and damaged pieces you built, near you, are repaired for you, the way the hammer repairs them (which needs no materials).", synced: false, sectionOrder: true, settingOrder: true);
+        repairRange = config.BindConfigInOrder("Auto Repair", "Range", defaultValue: 40f, "Pieces up to this many metres from you are repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        repairBelow = config.BindConfigInOrder("Auto Repair", "Repair Below", defaultValue: 75f, "A piece is repaired once its health is below this percentage. At 100 every scratch is repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
 
         CarryOverOldSections(config);
 
