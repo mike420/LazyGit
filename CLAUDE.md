@@ -36,7 +36,7 @@ sibling mod `E:\Valheim_Mods\ValheimSkies` (use it as the reference for anything
 - `LazyGit/Automation/TreeKeeper.cs`: Auto Replant (not a chest chore: prefix on `Destructible.Destroy` plants the sapling in a coroutine on the plugin, only by the stump's owner, from a built-in table of stump -> sapling names; prefix on `TreeBase.SpawnLog` sets the stump prefab's `m_ttl` so stumps vanish; postfix on `Plant.HaveGrowSpace`).
 - `LazyGit/Translations.cs` + `Assets/Translations/<Language>/LazyGit.json`: 9 languages (English, Chinese, French, German, Polish, Portuguese_Brazilian, Russian, Spanish, Turkish). Every new message key goes in all 9.
 - `Shared/`: git submodule (`github.com/mike420/ValheimShared`), the F7 settings panel. Needs `git submodule update --init`.
-- `LazyGit/Package/`: Thunderstore README, CHANGELOG, manifest, icon (**icon.png is still a placeholder copied from ValheimSkies**). `Nexus/README.txt` is generated from the Package README by `UpdateNexusReadme.ps1` on Release builds. Add each new feature to the Package README (features + settings table) and the changelog, and bump the version.
+- `LazyGit/Package/`: Thunderstore README, CHANGELOG, manifest, icon (256x256 PNG, the real one). `Nexus/README.txt` is generated from the Package README by `UpdateNexusReadme.ps1` on Release builds. Add each new feature to the Package README (features + settings table) and the changelog, and bump the version.
 
 ## Building
 
@@ -55,4 +55,4 @@ Plain `dotnet build` cannot resolve the game references. The game's log is `D:\S
 
 Done: project set up, builds; Auto Fuel and Auto Stations (smelters, ovens, kilns, spinning wheels, windmills, eitr refineries), Auto Cooking, Auto Fermenting, Auto Ballista, Auto Close Doors, Auto Repair Buildings, Auto Collect, Auto Repair Gear, Auto Shield, Auto Replant written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: keep the version at 1.0.0 and add new features to the 1.0.0 changelog entry until the first release.**
 
-Next: test every chore in the game; then replace the icon. All the chore groups in the first plan are written.
+Next: test every chore in the game. All the chore groups in the first plan are written, and the icon is done.

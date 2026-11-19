@@ -6,6 +6,19 @@ Everything tedious in a base is left to a chest. Each chore has its own switch. 
 
 <br>
 
+## 💶 Donations: 
+
+If you enjoy using this Valheim mod, please consider making a small donation to help support its development and future updates.
+
+Even £1 or $1 would be greatly appreciated and would help more than you might think!
+
+Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account is NOT required!)
+
+<a href="https://www.paypal.com/donate/?hosted_button_id=BN8HEWHRMAREU">![](https://imgup.uk/i/n7Sg7WK9.png)</a>
+
+<br>
+<br>
+
 ## ✅ Features:
 
 ### 🔥 Auto Fuel
@@ -159,14 +172,35 @@ The translation files are in `BepInEx/config/LazyGit/Translations/<Language>/Laz
 
 <br>
 
-## 💶 Donations: 
+## 💻 Installation:
 
-If you enjoy using this Valheim mod, please consider making a small donation to help support its development and future updates.
+### Automatic Install
 
-Even £1 or $1 would be greatly appreciated and would help more than you might think!
+Plugin is created to be installed with r2modman or Gale.
+For Nexus downloads you will need to install manually.
 
-Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account is NOT required!)
+### Manual Install
 
-<a href="https://www.paypal.com/donate/?hosted_button_id=BN8HEWHRMAREU">![](https://imgup.uk/i/n7Sg7WK9.png)</a>
+  * Un-zip and drag the `AuroraBorealis` folder in your `BepInEx/plugins/` folder.
+
 <br>
+
+
+## 💥 Plugins Created by Magic Mike:
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/CoreWoodExtras">Corewood Extras</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodFortified">Corewood Fortified</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodAdditions">Corewood Additions</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/MyDirtyHoe">My Dirty Hoe</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/ChestPreview">Chest Preview</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/YabbaDabbaDoo">YabbaDabbaDoo</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/BetterBuildMenu">Better Build Menu</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/BetterEquipSlots">Better Equip Slots</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/ExtraInventorySlots">Extra Inventory Slots</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/VillagePlebs">Village Plebs</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/EinherjarBodies">Einherjar Bodies</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/ValheimSkies">Valheim Skies</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/AuroraBorealis">Aurora Borealis</a>
+
 <br>
+
+## 💬 Comments/Suggestions/Help: <a href="https://www.nexusmods.com/valheim/mods/2806">Nexus</a>, <a href="https://discord.gg/mnr36G6J4x">Discord</a>.
