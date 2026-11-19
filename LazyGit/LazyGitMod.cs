@@ -46,6 +46,7 @@ public class LazyGitMod : BaseUnityPlugin
         CookingKeeper.TrackExisting();
         FermentKeeper.TrackExisting();
         BallistaKeeper.TrackExisting();
+        DoorKeeper.TrackExisting();
     }
 
     public void Update()
@@ -76,6 +77,10 @@ public class LazyGitMod : BaseUnityPlugin
         if (MainConfig.ballistaEnabled.Value)
         {
             BallistaKeeper.DoRound();
+        }
+        if (MainConfig.doorEnabled.Value)
+        {
+            DoorKeeper.DoRound();
         }
     }
 
