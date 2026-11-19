@@ -130,9 +130,8 @@ internal static class DoorKeeper
             return setting;
         }
 
-        Localization text = Localization.instance;
-        string pieceName = text != null ? text.Localize(piece.m_name) : prefabName;
-        setting = MainConfig.File.Bind(MainConfig.Section(KindSection), prefabName, true, $"{pieceName} is closed when it has been left open with nobody near it.");
+        string pieceName = EnglishText.Of(piece.m_name, prefabName);
+        setting = MainConfig.BindKind(KindSection, prefabName, pieceName, $"{pieceName} is closed when it has been left open with nobody near it.");
         kinds[prefabName] = setting;
         return setting;
     }

@@ -159,10 +159,9 @@ internal static class FuelKeeper
             return setting;
         }
 
-        Localization text = Localization.instance;
-        string pieceName = text != null ? text.Localize(piece.m_name) : prefabName;
-        string fuelName = text != null ? text.Localize(fire.m_fuelItem.m_itemData.m_shared.m_name).ToLowerInvariant() : "its fuel";
-        setting = MainConfig.File.Bind(MainConfig.Section(KindSection), prefabName, true, $"{pieceName} takes {fuelName} from nearby chests.");
+        string pieceName = EnglishText.Of(piece.m_name, prefabName);
+        string fuelName = EnglishText.Of(fire.m_fuelItem.m_itemData.m_shared.m_name, "its fuel").ToLowerInvariant();
+        setting = MainConfig.BindKind(KindSection, prefabName, pieceName, $"{pieceName} takes {fuelName} from nearby chests.");
         kinds[prefabName] = setting;
         return setting;
     }

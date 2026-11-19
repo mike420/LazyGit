@@ -138,6 +138,27 @@ internal static class MainConfig
         return index >= 0 ? $"{index + 1:00} - {name}" : $"99 - {name}";
     }
 
+    // The on/off switch of one kind of piece, in the "... Types" section of its chore. It is named after the piece as
+    // the player sees it ("Campfire"), not its prefab name; if two prefabs have the same name the later one has its
+    // prefab name added. (The characters BepInEx does not allow in a setting name are left out.)
+    private static readonly Dictionary<string, HashSet<string>> kindNames = new Dictionary<string, HashSet<string>>();
+
+    public static ConfigEntry<bool> BindKind(string section, string prefabName, string pieceName, string description)
+    {
+        string name = Regex.Replace(pieceName ?? "", @"[=\n\t\\""'\[\]]", "").Trim();
+        if (name.Length == 0)
+        {
+            name = prefabName;
+        }
+        if (!kindNames.TryGetValue(section, out HashSet<string> taken))
+        {
+            kindNames[section] = taken = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        }
+        string key = taken.Contains(name) ? $"{name} ({prefabName})" : name;
+        taken.Add(key);
+        return File.Bind(Section(section), key, true, description);
+    }
+
     public static void Init(ConfigFile config)
     {
         File = config;

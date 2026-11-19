@@ -143,9 +143,8 @@ internal static class StationKeeper
             return setting;
         }
 
-        Localization text = Localization.instance;
-        string pieceName = text != null ? text.Localize(piece.m_name) : prefabName;
-        setting = MainConfig.File.Bind(MainConfig.Section(KindSection), prefabName, true, $"{pieceName} is kept stocked with fuel and raw material from nearby chests.");
+        string pieceName = EnglishText.Of(piece.m_name, prefabName);
+        setting = MainConfig.BindKind(KindSection, prefabName, pieceName, $"{pieceName} is kept stocked with fuel and raw material from nearby chests.");
         kinds[prefabName] = setting;
         return setting;
     }

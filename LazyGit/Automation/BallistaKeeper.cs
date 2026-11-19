@@ -148,9 +148,8 @@ internal static class BallistaKeeper
             return setting;
         }
 
-        Localization text = Localization.instance;
-        string pieceName = text != null ? text.Localize(piece.m_name) : prefabName;
-        setting = MainConfig.File.Bind(MainConfig.Section(KindSection), prefabName, true, $"{pieceName} is restocked with ammunition from nearby chests.");
+        string pieceName = EnglishText.Of(piece.m_name, prefabName);
+        setting = MainConfig.BindKind(KindSection, prefabName, pieceName, $"{pieceName} is restocked with ammunition from nearby chests.");
         kinds[prefabName] = setting;
         return setting;
     }

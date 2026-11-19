@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\IgnoresAccessChecks.cs" />
     <Compile Include="Safe.cs" />
+    <Compile Include="EnglishText.cs" />
     <Compile Include="LazyGitMod.cs" />
     <Compile Include="MainConfig.cs" />
     <Compile Include="Patches.cs" />
