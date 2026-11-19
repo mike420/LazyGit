@@ -54,6 +54,7 @@
     <Compile Include="MainConfig.cs" />
     <Compile Include="Patches.cs" />
     <Compile Include="Translations.cs" />
+    <Compile Include="Automation\Ownership.cs" />
     <Compile Include="Automation\ChestIndex.cs" />
     <Compile Include="Automation\FuelKeeper.cs" />
     <Compile Include="Automation\StationKeeper.cs" />

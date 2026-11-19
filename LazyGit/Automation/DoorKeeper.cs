@@ -64,7 +64,8 @@ internal static class DoorKeeper
             lastBusy.Remove(gone);
         }
 
-        float now = Time.unscaledTime;
+        // (Game time, which stands still while the game is paused: a pause is not time with nobody near)
+        float now = Time.time;
         float keepOpenNear = MainConfig.doorPlayerDistance.Value;
         float delay = MainConfig.doorCloseAfter.Value;
         List<Player> players = Player.GetAllPlayers();
@@ -84,15 +85,8 @@ internal static class DoorKeeper
 
     private static void Check(Door door, float now, float keepOpenNear, float delay, List<Player> players)
     {
-        // Only the door's owner closes it: if two players both did, the second would open it again
         ZNetView view = viewOf(door);
-        if (view == null || !view.IsValid() || !view.IsOwner())
-        {
-            lastBusy.Remove(door);
-            return;
-        }
-
-        if (view.GetZDO().GetInt(ZDOVars.s_state, 0) == 0)
+        if (view == null || !view.IsValid() || view.GetZDO().GetInt(ZDOVars.s_state, 0) == 0)
         {
             lastBusy.Remove(door);
             return;
@@ -101,6 +95,7 @@ internal static class DoorKeeper
         Piece piece = door.GetComponent<Piece>();
         if (piece == null || !piece.IsPlacedByPlayer() || !CanBeClosed(door) || !KindSetting(Utils.GetPrefabName(door.gameObject), piece).Value)
         {
+            lastBusy.Remove(door);
             return;
         }
 
@@ -112,7 +107,9 @@ internal static class DoorKeeper
             return;
         }
 
-        if (now - lastBusy[door] >= delay)
+        // Only the door's owner closes it: if two players both did, the second would open it again. A door that
+        // another player owns is claimed now and closed from the next round on (the timer keeps running).
+        if (now - lastBusy[door] >= delay && Ownership.Hold(view))
         {
             // The same call a player's click makes; on an open door it closes it
             view.InvokeRPC("UseDoor", true);

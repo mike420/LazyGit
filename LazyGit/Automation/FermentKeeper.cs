@@ -73,9 +73,8 @@ internal static class FermentKeeper
 
     private static void Tend(Fermenter fermenter)
     {
-        // Only the fermenter's owner tends it, so two players never both work the same one
         ZNetView view = viewOf(fermenter);
-        if (view == null || !view.IsValid() || !view.IsOwner())
+        if (view == null || !view.IsValid())
         {
             return;
         }
@@ -89,6 +88,19 @@ internal static class FermentKeeper
         ZDO zdo = view.GetZDO();
         float range = MainConfig.fermentChestRange.Value;
         int content = zdo.GetInt(ZDOVars.s_content, 0);
+
+        // Nothing to do while it is fermenting
+        if (content != 0 && !IsReady(fermenter, zdo))
+        {
+            return;
+        }
+
+        // Only the fermenter's owner tends it, so two players never both work the same one. One that another player
+        // owns is claimed now and tended from the next round on.
+        if (!Ownership.Hold(view))
+        {
+            return;
+        }
 
         if (content == 0)
         {
@@ -126,10 +138,17 @@ internal static class FermentKeeper
         return started != 0L && (ZNet.instance.GetTime() - new DateTime(started)).TotalSeconds > fermenter.m_fermentationDuration;
     }
 
-    // Empties a ready fermenter the way tapping it does, but the drink goes into a chest if there is room
+    // Empties a ready fermenter the way tapping it does, but the drink goes into a chest. With no room for all of it
+    // the fermenter is left as it is until there is (nothing is dropped).
     private static void Tap(Fermenter fermenter, ZDO zdo, int content, float range)
     {
         Fermenter.ItemConversion conversion = fermenter.m_conversion.FirstOrDefault(c => c.m_from != null && c.m_from.gameObject.name.GetStableHashCode() == content);
+        if (conversion != null && conversion.m_to != null && MainConfig.fermentToChests.Value
+            && !ChestIndex.RoomFor(fermenter.transform.position, range, conversion.m_to.gameObject, conversion.m_producedItems))
+        {
+            return;
+        }
+
         zdo.Set(ZDOVars.s_content, 0);
         zdo.Set(ZDOVars.s_startTime, 0L);
         zdo.Set(ZDOVars.s_cheatedQueued, false);
@@ -143,7 +162,7 @@ internal static class FermentKeeper
         {
             left -= ChestIndex.Put(fermenter.transform.position, range, conversion.m_to.gameObject, left);
         }
-        // What no chest has room for comes out of the tap, as it does for a player
+        // With the setting off, the drink comes out of the tap, as it does for a player
         for (int i = 0; i < left; i++)
         {
             Vector3 at = fermenter.m_outputPoint.position + Vector3.up * 0.3f;

@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace LazyGit;
 
-// The chests that automatic chores may take things from. Every chest in the world is listed as it wakes up; once a
-// round, the ones that are fair game are picked out, and a chore asks for the ones near it.
+// The chests that automatic chores may take things from, and put things into. Every chest in the world is listed as it
+// wakes up; once a round, the ones that are fair game are picked out, and a chore asks for the ones near it.
 internal static class ChestIndex
 {
     private static readonly HashSet<Container> everyChest = new HashSet<Container>();
@@ -14,8 +14,10 @@ internal static class ChestIndex
     private static readonly AccessTools.FieldRef<Container, ZNetView> viewOf = AccessTools.FieldRefAccess<Container, ZNetView>("m_nview");
     private static readonly AccessTools.FieldRef<Container, Piece> pieceOf = AccessTools.FieldRefAccess<Container, Piece>("m_piece");
 
-    // The usable chests of this round, made the first time a chore asks for them (most rounds, nothing needs a chest)
-    private static List<Container> usableThisRound;
+    // The fair-game chests of this round, made the first time a chore asks for them (most rounds, nothing needs a
+    // chest): the ones the local player owns, which can be changed now, and the ones other players own
+    private static List<Container> ownedThisRound;
+    private static List<Container> othersThisRound;
 
     public static void Track(Container chest)
     {
@@ -32,7 +34,8 @@ internal static class ChestIndex
 
     public static void NewRound()
     {
-        usableThisRound = null;
+        ownedThisRound = null;
+        othersThisRound = null;
         everyChest.RemoveWhere(chest => chest == null);
     }
 
@@ -42,11 +45,7 @@ internal static class ChestIndex
     {
         float maxSqr = range * range;
         int taken = 0;
-        foreach (Container chest in Usable()
-            .Select(c => (chest: c, sqr: (c.transform.position - at).sqrMagnitude))
-            .Where(c => c.sqr <= maxSqr)
-            .OrderBy(c => c.sqr)
-            .Select(c => c.chest))
+        foreach (Container chest in InRange(Owned(), at, maxSqr))
         {
             Inventory inventory = chest.GetInventory();
             int have = inventory.CountItems(itemName, -1, false);
@@ -60,6 +59,15 @@ internal static class ChestIndex
             if (taken >= amount)
             {
                 break;
+            }
+        }
+
+        // Another player's chest that has what is needed is claimed, and used from a later round on
+        if (taken < amount)
+        {
+            foreach (Container chest in InRange(Others(), at, maxSqr).Where(c => c.GetInventory().CountItems(itemName, -1, false) > 0))
+            {
+                Ownership.Hold(viewOf(chest));
             }
         }
         return taken;
@@ -77,12 +85,8 @@ internal static class ChestIndex
         string itemName = drop.m_itemData.m_shared.m_name;
         float maxSqr = range * range;
         int put = 0;
-        foreach (Container chest in Usable()
-            .Select(c => (chest: c, sqr: (c.transform.position - at).sqrMagnitude))
-            .Where(c => c.sqr <= maxSqr)
-            .OrderBy(c => c.chest.GetInventory().CountItems(itemName, -1, false) > 0 ? 0 : 1)
-            .ThenBy(c => c.sqr)
-            .Select(c => c.chest))
+        foreach (Container chest in InRange(Owned(), at, maxSqr)
+            .OrderBy(c => c.GetInventory().CountItems(itemName, -1, false) > 0 ? 0 : 1))
         {
             Inventory inventory = chest.GetInventory();
             while (put < amount && inventory.CanAddItem(prefab, 1) && inventory.AddItem(prefab, 1))
@@ -94,17 +98,81 @@ internal static class ChestIndex
                 break;
             }
         }
+
+        if (put < amount)
+        {
+            ClaimOthersWithRoom(at, maxSqr, prefab);
+        }
         return put;
     }
 
-    private static List<Container> Usable()
+    // Whether the chests within 'range' of 'at' have room for 'amount' of an item (its prefab), all of it. Nothing is
+    // put in. A chore that must not drop anything on the ground asks this first, and waits if there is no room.
+    public static bool RoomFor(Vector3 at, float range, GameObject prefab, int amount)
     {
-        return usableThisRound ??= PickUsable();
+        ItemDrop drop = prefab != null ? prefab.GetComponent<ItemDrop>() : null;
+        if (drop == null)
+        {
+            return false;
+        }
+        ItemDrop.ItemData item = drop.m_itemData;
+        float maxSqr = range * range;
+        int room = 0;
+        foreach (Container chest in InRange(Owned(), at, maxSqr))
+        {
+            Inventory inventory = chest.GetInventory();
+            room += inventory.FindFreeStackSpace(item.m_shared.m_name, item.m_worldLevel) + inventory.GetEmptySlots() * item.m_shared.m_maxStackSize;
+            if (room >= amount)
+            {
+                return true;
+            }
+        }
+        ClaimOthersWithRoom(at, maxSqr, prefab);
+        return false;
     }
 
-    private static List<Container> PickUsable()
+    // Another player's chest with room is claimed, and used from a later round on
+    private static void ClaimOthersWithRoom(Vector3 at, float maxSqr, GameObject prefab)
     {
-        List<Container> picked = new List<Container>();
+        foreach (Container chest in InRange(Others(), at, maxSqr).Where(c => c.GetInventory().CanAddItem(prefab, 1)))
+        {
+            Ownership.Hold(viewOf(chest));
+        }
+    }
+
+    // The chests of a list within range, nearest first
+    private static IEnumerable<Container> InRange(List<Container> chests, Vector3 at, float maxSqr)
+    {
+        return chests
+            .Select(c => (chest: c, sqr: (c.transform.position - at).sqrMagnitude))
+            .Where(c => c.sqr <= maxSqr)
+            .OrderBy(c => c.sqr)
+            .Select(c => c.chest)
+            .ToList();
+    }
+
+    private static List<Container> Owned()
+    {
+        if (ownedThisRound == null)
+        {
+            Pick();
+        }
+        return ownedThisRound;
+    }
+
+    private static List<Container> Others()
+    {
+        if (othersThisRound == null)
+        {
+            Pick();
+        }
+        return othersThisRound;
+    }
+
+    private static void Pick()
+    {
+        ownedThisRound = new List<Container>();
+        othersThisRound = new List<Container>();
         long me = Player.m_localPlayer.GetPlayerID();
         foreach (Container chest in everyChest)
         {
@@ -113,17 +181,9 @@ internal static class ChestIndex
                 continue;
             }
 
-            // Only the player who owns a chest in the network may change what is in it. Another player's chest is
-            // claimed now and used from the next round on.
-            ZNetView view = viewOf(chest);
-            if (!view.IsOwner())
-            {
-                view.ClaimOwnership();
-                continue;
-            }
-            picked.Add(chest);
+            // Only the player who owns a chest in the network may change what is in it
+            (viewOf(chest).IsOwner() ? ownedThisRound : othersThisRound).Add(chest);
         }
-        return picked;
     }
 
     // A chest somebody built and is free to use: not a cart, a ship or a gravestone, not another player's private
@@ -155,6 +215,13 @@ internal static class ChestIndex
         }
 
         ZNetView view = viewOf(chest);
-        return view != null && view.IsValid() && chest.GetInventory() != null && !chest.IsInUse();
+        if (view == null || !view.IsValid() || chest.GetInventory() == null)
+        {
+            return false;
+        }
+
+        // Whether a chest is open: its owner knows it itself; for another player's chest the game keeps it in the
+        // chest's data (the local flag is only ever set on the owner's side)
+        return view.IsOwner() ? !chest.IsInUse() : view.GetZDO().GetInt(ZDOVars.s_inUse, 0) != 1;
     }
 }

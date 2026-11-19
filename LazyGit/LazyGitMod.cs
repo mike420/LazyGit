@@ -40,25 +40,29 @@ public class LazyGitMod : BaseUnityPlugin
         harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), PluginGUID);
 
         // The mod can be loaded while a world is already running: pick up what is there
-        ChestIndex.TrackExisting();
-        FuelKeeper.TrackExisting();
-        StationKeeper.TrackExisting();
-        CookingKeeper.TrackExisting();
-        FermentKeeper.TrackExisting();
-        BallistaKeeper.TrackExisting();
-        DoorKeeper.TrackExisting();
-        RepairKeeper.TrackExisting();
-        CollectKeeper.TrackExisting();
+        MainConfig.Batch(() =>
+        {
+            ChestIndex.TrackExisting();
+            FuelKeeper.TrackExisting();
+            StationKeeper.TrackExisting();
+            CookingKeeper.TrackExisting();
+            FermentKeeper.TrackExisting();
+            BallistaKeeper.TrackExisting();
+            DoorKeeper.TrackExisting();
+            RepairKeeper.TrackExisting();
+            CollectKeeper.TrackExisting();
+        });
     }
 
     public void Update()
     {
-        if (!MainConfig.modEnabled.Value || Player.m_localPlayer == null || ZNet.instance == null || Time.unscaledTime < nextChores)
+        if (!MainConfig.modEnabled.Value || Player.m_localPlayer == null || ZNet.instance == null || Time.timeScale == 0f || Time.unscaledTime < nextChores)
         {
             return;
         }
         nextChores = Time.unscaledTime + ChoreInterval;
 
+        Ownership.Prune();
         ChestIndex.NewRound();
         if (MainConfig.fuelEnabled.Value)
         {

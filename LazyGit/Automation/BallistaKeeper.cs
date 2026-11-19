@@ -78,9 +78,8 @@ internal static class BallistaKeeper
             return;
         }
 
-        // Only the turret's owner loads it, so two players never both fill the same one
         ZNetView view = viewOf(turret);
-        if (view == null || !view.IsValid() || !view.IsOwner())
+        if (view == null || !view.IsValid())
         {
             return;
         }
@@ -100,6 +99,13 @@ internal static class BallistaKeeper
         }
         int room = turret.m_maxAmmo - have;
         if (room < 1)
+        {
+            return;
+        }
+
+        // Only the turret's owner loads it, so two players never both fill the same one. One that another player
+        // owns is claimed now and loaded from the next round on.
+        if (!Ownership.Hold(view))
         {
             return;
         }

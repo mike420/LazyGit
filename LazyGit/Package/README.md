@@ -1,8 +1,8 @@
 # 🦥 Lazy Git
 
-Your base looks after itself. Fires and torches take their own fuel from your chests, so you never have to walk round with a stack of wood again.
+Your base looks after itself. Fires, smelters, cooking stations, fermenters, ballistas, beehives and sap extractors are kept stocked from your chests, doors close behind you, and damage is repaired, so you never have to walk round with a stack of wood again.
 
-More chores will follow in later updates: the aim is that everything tedious in a base can be left to a chest.
+Everything tedious in a base is left to a chest. Each chore has its own switch, and works only on what you built, using chests you are allowed to use.
 
 <br>
 
@@ -30,14 +30,14 @@ More chores will follow in later updates: the aim is that everything tedious in 
 
   * Cooking stations, iron cooking stations and grills are **loaded with raw food** from your chests while their fire is lit.
   * Where they burn fuel, it is topped up from the chests too.
-  * Food that is **done is taken off** before it can burn and put **into a chest** (one that already holds some first, then the nearest). If no chest has room, it is dropped beside the station.
+  * Food that is **done is taken off** before it can burn and put **into a chest** (one that already holds some first, then the nearest). If no chest has room, it **stays on the station** until there is: nothing is dropped on the floor.
   * Ovens are looked after by Auto Stations.
   * A **switch for each kind of cooking station**, and the same rules as the other chores: only what you built, only your chests.
 
 ### 🍺 Auto Fermenting
 
   * Fermentation barrels are **filled with mead base** from your chests as soon as they are empty.
-  * When a barrel is **ready it is tapped**, and the mead goes **into a chest** (one that already holds some first, then the nearest). What no chest has room for comes out of the tap as usual.
+  * When a barrel is **ready it is tapped**, and the mead goes **into a chest** (one that already holds some first, then the nearest). If the chests have no room for all of it, the barrel **waits** until they do: nothing is dropped on the floor.
   * A **switch for each kind of fermenter**, and the same rules as the other chores.
 
 ### 🏹 Auto Ballista
@@ -51,18 +51,18 @@ More chores will follow in later updates: the aim is that everything tedious in 
 
   * Doors and gates you built that are **left open** are closed again once **nobody has been near them** for 10 seconds (both settings).
   * Doors that need a key, and doors that cannot be closed, are left alone.
-  * A **switch for each kind of door**. In multiplayer the door's owner closes it, so two players never fight over one.
-
-### 🔨 Auto Repair
-
-  * Worn and damaged pieces **you built**, within **40 m** of you, are repaired once their health is below **75%** (both settings), the way the hammer repairs them, so it costs no materials.
-  * Not in a ward you have no access to, and a badly damaged base is mended over a few rounds rather than all at once.
+  * A **switch for each kind of door**. In multiplayer a door is closed by the player who owns it in the game's network, so two players never fight over one.
 
 ### 🍯 Auto Collect
 
   * **Beehives** and **sap extractors** you built are emptied **into a chest** within **30 m** (a setting): one that already holds some honey or sap first, then the nearest.
   * Emptied when full (a setting), so nothing is wasted. If no chest has room, it stays in the hive or extractor.
   * Honey and sap can each be switched off.
+
+### 🔨 Auto Repair
+
+  * Worn and damaged pieces **you built**, within **40 m** of you, are repaired once their health is below **75%** (both settings), the way the hammer repairs them, so it costs no materials.
+  * Not in a ward you have no access to, and a badly damaged base is mended over a few rounds rather than all at once.
 
 <br>
 
@@ -86,13 +86,13 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Chest Range (Auto Cooking) | 30 | Cooking stations take from chests up to this many metres away. |
 | Load Raw Food | On | Raw food from the chests is put on the station while its fire is lit. |
 | Take Off Cooked Food | On | Done food is taken off before it burns. |
-| Put Cooked Food In Chests | On | Taken-off food goes into a chest in range; if none has room, or Off, it is dropped beside the station. |
+| Put Cooked Food In Chests | On | Taken-off food goes into a chest in range; if none has room it stays on the station. If Off, it is dropped beside the station. |
 | Cooking Station Types | On | One switch for each kind of cooking station. |
 | Enable Auto Fermenting | On | Fermenters are filled and tapped automatically. |
 | Chest Range (Auto Fermenting) | 30 | Fermenters use chests up to this many metres away. |
 | Fill Empty Fermenters | On | An empty fermenter takes mead base from the chests. |
 | Tap Ready Fermenters | On | A ready fermenter is tapped. |
-| Put Drinks In Chests | On | Tapped drinks go into a chest in range; the rest comes out of the tap. |
+| Put Drinks In Chests | On | Tapped drinks go into a chest in range; if there is no room for all of them the barrel waits. If Off, they come out of the tap. |
 | Fermenter Types | On | One switch for each kind of fermenter. |
 | Enable Auto Ballista | On | Ballistas are restocked from your chests. |
 | Chest Range (Auto Ballista) | 30 | Ballistas take from chests up to this many metres away. |
@@ -102,14 +102,14 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Close After | 10 | Seconds an open door has had nobody near it before it is closed. |
 | Player Distance | 6 | A door stays open while a player is within this many metres. |
 | Door Types | On | One switch for each kind of door. |
-| Enable Auto Repair | On | Damaged pieces near you are repaired. |
-| Range | 40 | Pieces up to this many metres from you are repaired. |
-| Repair Below | 75 | A piece is repaired once its health is below this percentage. |
 | Enable Auto Collect | On | Beehives and sap extractors are emptied into your chests. |
 | Chest Range (Auto Collect) | 30 | The honey and sap go into chests up to this many metres away. |
 | Collect At | 100 | A hive or extractor is emptied once it is this percentage full. |
 | Collect Honey | On | Beehives are emptied. |
 | Collect Sap | On | Sap extractors are emptied. |
+| Enable Auto Repair | On | Damaged pieces near you are repaired. |
+| Range | 40 | Pieces up to this many metres from you are repaired. |
+| Repair Below | 75 | A piece is repaired once its health is below this percentage. |
 
 <br>
 

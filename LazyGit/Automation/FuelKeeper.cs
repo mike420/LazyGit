@@ -90,9 +90,8 @@ internal static class FuelKeeper
             return 0;
         }
 
-        // Only the fire's owner feeds it, so two players never both fill the same fire
         ZNetView view = viewOf(fire);
-        if (view == null || !view.IsValid() || !view.IsOwner())
+        if (view == null || !view.IsValid())
         {
             return 0;
         }
@@ -112,6 +111,13 @@ internal static class FuelKeeper
         }
         int room = Mathf.FloorToInt(fire.m_maxFuel - fuel);
         if (room < 1)
+        {
+            return 0;
+        }
+
+        // Only the fire's owner feeds it, so two players never both fill the same fire. One that another player owns
+        // is claimed now and fed from the next round on.
+        if (!Ownership.Hold(view))
         {
             return 0;
         }

@@ -6,6 +6,7 @@ sibling mod `E:\Valheim_Mods\ValheimSkies` (use it as the reference for anything
 
 ## Hard rules
 
+- **A chore that stores items in a chest never drops them on the ground.** With no room it waits (`ChestIndex.RoomFor` before changing anything, or `Put` returning 0), and the item stays where it is.
 - **All code must be original. Do not copy code from the reference mods.** They are in `G:\Valheim_Stuff\Auto`
   (DigiTeam Auto Fuel/Oven/Fermenter/Processing/Cooking Station/Close Doors/Repair, Majestic StationAutoPopper,
   CRNR BallistaRestock, SimplifyDave AutoRefillFires, blacks7ar LazyVikings). They are known to work: read their
@@ -20,13 +21,14 @@ sibling mod `E:\Valheim_Mods\ValheimSkies` (use it as the reference for anything
 - `LazyGit/LazyGitMod.cs`: plugin (GUID `MagicMike.LazyGit`, version in `PluginVersion`). `Update` runs a chore round every 5 s.
 - `LazyGit/MainConfig.cs`: settings via Jotunn `BindConfigInOrder` (numbered sections), plus `CarryOverOldSections` so renumbering sections keeps users' values. Per-fire-type switches are bound dynamically in section "Fire Types".
 - `LazyGit/Patches.cs`: Harmony postfixes that register fires, chests and the fire kinds.
+- `LazyGit/Automation/Ownership.cs`: `Hold(view)`: true if the local player owns the object, otherwise claims it (at most once per 30 s) and the chore goes ahead next round. **A chore claims a piece only once it knows there is work to do there**, never just to look at it. Repair needs none (its RPC is sent to the owner and is harmless twice).
 - `LazyGit/Automation/ChestIndex.cs`: the rules for which chests a chore may take from. **Every chore must take items through it** (`Take`; `Put` for putting items in).
 - `LazyGit/Automation/FuelKeeper.cs`: Auto Fuel.
 - `LazyGit/Automation/StationKeeper.cs`: Auto Stations (every `Smelter`: fuel via `RPC_AddFuel`, ore via `RPC_AddOre(prefabName, false)`, one call per item; per-kind switches in "Station Types"). Ovens are Smelters, so they are covered here. New .cs files must be added to `LazyGit.csproj` by hand.
-- `LazyGit/Automation/CookingKeeper.cs`: Auto Cooking (every `CookingStation`: fuel `RPC_AddFuel`, raw food `RPC_AddItem(prefabName, false)` per free slot while `IsFireLit` (private, via delegate), done food into a chest via `ChestIndex.Put` (slot cleared through the ZDO) or, if none has room, `RPC_RemoveDoneItem(point, 1)`; switches in "Cooking Station Types").
-- `LazyGit/Automation/FermentKeeper.cs`: Auto Fermenting (every `Fermenter`: empty = `s_content` 0 -> take one `m_from` and `RPC_AddItem(nameHash, false)`; ready = `s_startTime` older than `m_fermentationDuration` -> clear the ZDO like `RPC_Tap` and `ChestIndex.Put` the `m_producedItems`, the rest instantiated at `m_outputPoint`; switches in "Fermenter Types").
+- `LazyGit/Automation/CookingKeeper.cs`: Auto Cooking (every `CookingStation`: fuel `RPC_AddFuel`, raw food `RPC_AddItem(prefabName, false)` per free slot while `IsFireLit` (private, via delegate), done food into a chest via `ChestIndex.Put` (slot cleared through the ZDO) and if none has room it waits (only with "Put Cooked Food In Chests" off is it popped with `RPC_RemoveDoneItem(point, 1)`); switches in "Cooking Station Types").
+- `LazyGit/Automation/FermentKeeper.cs`: Auto Fermenting (every `Fermenter`: empty = `s_content` 0 -> take one `m_from` and `RPC_AddItem(nameHash, false)`; ready = `s_startTime` older than `m_fermentationDuration` -> if `ChestIndex.RoomFor` the `m_producedItems`, clear the ZDO like `RPC_Tap` and `Put` them (otherwise it waits; only with the setting off are they instantiated at `m_outputPoint`); switches in "Fermenter Types").
 - `LazyGit/Automation/BallistaKeeper.cs`: Auto Ballista (every `Turret` with `m_maxAmmo` > 0: ammo in `ZDOVars.s_ammo`, one `RPC_AddAmmo(prefabName)` per bolt; a loaded turret keeps its `GetAmmoType()`, an empty one takes the first `m_allowedAmmo` the chests have; switches in "Ballista Types").
-- `LazyGit/Automation/DoorKeeper.cs`: Auto Close Doors (every `Door` with no key and not `m_canNotBeClosed`: open = `s_state` != 0; closed with `InvokeRPC("UseDoor", true)`; only the door's owner acts, or two clients would toggle it open again, so a door with no owner is never closed; switches in "Door Types").
+- `LazyGit/Automation/DoorKeeper.cs`: Auto Close Doors (every `Door` with no key and not `m_canNotBeClosed`: open = `s_state` != 0; closed with `InvokeRPC("UseDoor", true)`; only the door's owner acts, or two clients would toggle it open again (see Ownership); the idle timer uses game time; switches in "Door Types").
 - `LazyGit/Automation/RepairKeeper.cs`: Auto Repair (every `WearNTear` of a player-built `Piece` within range of the player and under "Repair Below": `WearNTear.Repair()`, free like the hammer; at most 30 per round; no per-kind switches, there are too many pieces).
 - `LazyGit/Automation/CollectKeeper.cs`: Auto Collect (`Beehive` and `SapCollector`, which is not a Smelter: product built up in `ZDOVars.s_level`; when at least "Collect At" full, `ChestIndex.Put` the product (`level * Game.ScaleDrops`) and lower `s_level` by the units that went in; the game's own extract would drop it on the ground; only the owner acts).
 - `LazyGit/Translations.cs` + `Assets/Translations/<Language>/LazyGit.json`: 9 languages (English, Chinese, French, German, Polish, Portuguese_Brazilian, Russian, Spanish, Turkish). Every new message key goes in all 9.
@@ -43,6 +45,7 @@ Plain `dotnet build` cannot resolve the game references. The game's log is `D:\S
 
 - Fires: `Fireplace` (`m_fuelItem`, `m_maxFuel`, `m_infiniteFuel`, `m_canRefill`), fuel in the ZDO (`ZDOVars.s_fuel`); add fuel with `nview.InvokeRPC("RPC_AddFuelAmount", float)`. Only the fire's owner feeds it (no double fills in multiplayer); only `Piece.IsPlacedByPlayer()` fires.
 - Chests: `Container` (`m_privacy` Public/Private/Group, `m_wagon`, `m_checkGuardStone`, `IsInUse()`); take with `Inventory.RemoveItem(name, n, -1, false)` (the container saves itself when changed, if we own it); a chest owned by someone else is `ClaimOwnership()`ed and used next round.
+- Many per-kind settings are bound at once: wrap them in `MainConfig.Batch` (one save of the cfg file, not one each).
 - Tracking: Harmony postfixes on `Awake` keep our own sets of fires and chests, so a round never searches the scene.
 
 ## Status

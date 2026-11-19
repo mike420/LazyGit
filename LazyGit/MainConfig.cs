@@ -48,17 +48,36 @@ internal static class MainConfig
     public static ConfigEntry<float> doorCloseAfter;
     public static ConfigEntry<float> doorPlayerDistance;
 
-    // Auto Repair
-    public static ConfigEntry<bool> repairEnabled;
-    public static ConfigEntry<float> repairRange;
-    public static ConfigEntry<float> repairBelow;
-
     // Auto Collect
     public static ConfigEntry<bool> collectEnabled;
     public static ConfigEntry<float> collectChestRange;
     public static ConfigEntry<float> collectAt;
     public static ConfigEntry<bool> collectHoney;
     public static ConfigEntry<bool> collectSap;
+
+    // Auto Repair
+    public static ConfigEntry<bool> repairEnabled;
+    public static ConfigEntry<float> repairRange;
+    public static ConfigEntry<float> repairBelow;
+
+    // Binds many settings with one save of the file at the end, not one save for each
+    public static void Batch(System.Action binding)
+    {
+        bool saveOnSet = File.SaveOnConfigSet;
+        File.SaveOnConfigSet = false;
+        try
+        {
+            binding();
+        }
+        finally
+        {
+            File.SaveOnConfigSet = saveOnSet;
+        }
+        if (saveOnSet)
+        {
+            File.Save();
+        }
+    }
 
     public static void Init(ConfigFile config)
     {
@@ -79,13 +98,13 @@ internal static class MainConfig
         cookingChestRange = config.BindConfigInOrder("Auto Cooking", "Chest Range", defaultValue: 30f, "A cooking station takes what it needs from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
         cookingLoad = config.BindConfigInOrder("Auto Cooking", "Load Raw Food", defaultValue: true, "Raw food from the chests is put on the station while its fire is lit.", synced: false, sectionOrder: true, settingOrder: true);
         cookingTakeDone = config.BindConfigInOrder("Auto Cooking", "Take Off Cooked Food", defaultValue: true, "Food that is done is taken off before it burns.", synced: false, sectionOrder: true, settingOrder: true);
-        cookingToChests = config.BindConfigInOrder("Auto Cooking", "Put Cooked Food In Chests", defaultValue: true, "Cooked food goes into a chest within range (one that already has some first, then the nearest). If no chest has room, or this is Off, it is dropped beside the station.", synced: false, sectionOrder: true, settingOrder: true);
+        cookingToChests = config.BindConfigInOrder("Auto Cooking", "Put Cooked Food In Chests", defaultValue: true, "Cooked food goes into a chest within range (one that already has some first, then the nearest). If no chest has room, the food stays on the station until there is: nothing is dropped. If this is Off, it is dropped beside the station.", synced: false, sectionOrder: true, settingOrder: true);
 
         fermentEnabled = config.BindConfigInOrder("Auto Fermenting", "Enable Auto Fermenting", defaultValue: true, "Fermenters you built are filled with mead base from your chests, and what is ready is tapped into a chest.", synced: false, sectionOrder: true, settingOrder: true);
         fermentChestRange = config.BindConfigInOrder("Auto Fermenting", "Chest Range", defaultValue: 30f, "A fermenter takes and puts things in chests up to this many metres away.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
         fermentLoad = config.BindConfigInOrder("Auto Fermenting", "Fill Empty Fermenters", defaultValue: true, "An empty fermenter takes mead base from the chests.", synced: false, sectionOrder: true, settingOrder: true);
         fermentTap = config.BindConfigInOrder("Auto Fermenting", "Tap Ready Fermenters", defaultValue: true, "A fermenter that is ready is tapped, so it can be filled again.", synced: false, sectionOrder: true, settingOrder: true);
-        fermentToChests = config.BindConfigInOrder("Auto Fermenting", "Put Drinks In Chests", defaultValue: true, "The tapped drinks go into a chest within range (one that already has some first, then the nearest). What no chest has room for comes out of the tap.", synced: false, sectionOrder: true, settingOrder: true);
+        fermentToChests = config.BindConfigInOrder("Auto Fermenting", "Put Drinks In Chests", defaultValue: true, "The tapped drinks go into a chest within range (one that already has some first, then the nearest). If the chests have no room for all of it, the fermenter waits until they do: nothing is dropped. If this is Off, it comes out of the tap.", synced: false, sectionOrder: true, settingOrder: true);
 
         ballistaEnabled = config.BindConfigInOrder("Auto Ballista", "Enable Auto Ballista", defaultValue: true, "Ballistas you built are restocked with bolts from your chests.", synced: false, sectionOrder: true, settingOrder: true);
         ballistaChestRange = config.BindConfigInOrder("Auto Ballista", "Chest Range", defaultValue: 30f, "A ballista takes ammunition from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
@@ -95,15 +114,15 @@ internal static class MainConfig
         doorCloseAfter = config.BindConfigInOrder("Auto Close Doors", "Close After", defaultValue: 10f, "How many seconds an open door has had nobody near it before it is closed. (Checked every 5 seconds, so it can take a little longer.)", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 300f));
         doorPlayerDistance = config.BindConfigInOrder("Auto Close Doors", "Player Distance", defaultValue: 6f, "A door is left open while any player is within this many metres of it.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 50f));
 
-        repairEnabled = config.BindConfigInOrder("Auto Repair", "Enable Auto Repair", defaultValue: true, "Worn and damaged pieces you built, near you, are repaired for you, the way the hammer repairs them (which needs no materials).", synced: false, sectionOrder: true, settingOrder: true);
-        repairRange = config.BindConfigInOrder("Auto Repair", "Range", defaultValue: 40f, "Pieces up to this many metres from you are repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
-        repairBelow = config.BindConfigInOrder("Auto Repair", "Repair Below", defaultValue: 75f, "A piece is repaired once its health is below this percentage. At 100 every scratch is repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
-
         collectEnabled = config.BindConfigInOrder("Auto Collect", "Enable Auto Collect", defaultValue: true, "Beehives and sap extractors you built are emptied into your chests, so you do not have to visit them.", synced: false, sectionOrder: true, settingOrder: true);
-        collectChestRange = config.BindConfigInOrder("Auto Collect", "Chest Range", defaultValue: 30f, "The honey and sap go into chests up to this many metres away (one that already has some first, then the nearest). If no chest has room, they stay in the hive or extractor.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        collectChestRange = config.BindConfigInOrder("Auto Collect", "Chest Range", defaultValue: 30f, "The honey and sap go into chests up to this many metres away (one that already has some first, then the nearest). If no chest has room, they stay in the hive or extractor until there is.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
         collectAt = config.BindConfigInOrder("Auto Collect", "Collect At", defaultValue: 100f, "A hive or extractor is emptied once it is this percentage full. At 100 it is emptied when full, so nothing is wasted.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 100f));
         collectHoney = config.BindConfigInOrder("Auto Collect", "Collect Honey", defaultValue: true, "Beehives are emptied.", synced: false, sectionOrder: true, settingOrder: true);
         collectSap = config.BindConfigInOrder("Auto Collect", "Collect Sap", defaultValue: true, "Sap extractors are emptied.", synced: false, sectionOrder: true, settingOrder: true);
+
+        repairEnabled = config.BindConfigInOrder("Auto Repair", "Enable Auto Repair", defaultValue: true, "Worn and damaged pieces you built, near you, are repaired for you, the way the hammer repairs them (which needs no materials).", synced: false, sectionOrder: true, settingOrder: true);
+        repairRange = config.BindConfigInOrder("Auto Repair", "Range", defaultValue: 40f, "Pieces up to this many metres from you are repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        repairBelow = config.BindConfigInOrder("Auto Repair", "Repair Below", defaultValue: 75f, "A piece is repaired once its health is below this percentage. At 100 every scratch is repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
 
         CarryOverOldSections(config);
 

@@ -100,11 +100,14 @@ internal static class ZNetSceneAwakePatch
 {
     private static void Postfix(ZNetScene __instance)
     {
-        FuelKeeper.ListFireKinds(__instance);
-        StationKeeper.ListStationKinds(__instance);
-        CookingKeeper.ListKinds(__instance);
-        FermentKeeper.ListKinds(__instance);
-        BallistaKeeper.ListKinds(__instance);
-        DoorKeeper.ListKinds(__instance);
+        MainConfig.Batch(() =>
+        {
+            FuelKeeper.ListFireKinds(__instance);
+            StationKeeper.ListStationKinds(__instance);
+            CookingKeeper.ListKinds(__instance);
+            FermentKeeper.ListKinds(__instance);
+            BallistaKeeper.ListKinds(__instance);
+            DoorKeeper.ListKinds(__instance);
+        });
     }
 }

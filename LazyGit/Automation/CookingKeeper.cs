@@ -74,9 +74,8 @@ internal static class CookingKeeper
 
     private static void Tend(CookingStation station)
     {
-        // Only the station's owner tends it, so two players never both load the same one
         ZNetView view = viewOf(station);
-        if (view == null || !view.IsValid() || !view.IsOwner() || station.m_slots == null)
+        if (view == null || !view.IsValid() || station.m_slots == null)
         {
             return;
         }
@@ -89,6 +88,26 @@ internal static class CookingKeeper
 
         ZDO zdo = view.GetZDO();
         float range = MainConfig.cookingChestRange.Value;
+
+        // Is there anything to do here: food to take off, a free slot, room for fuel?
+        bool work = false;
+        for (int i = 0; i < station.m_slots.Length && !work; i++)
+        {
+            string item = zdo.GetString("slot" + i, "");
+            work = item == "" || IsDone(station, item);
+        }
+        work |= station.m_useFuel && station.m_fuelItem != null && station.m_maxFuel > 0 && station.m_maxFuel - zdo.GetFloat(ZDOVars.s_fuel, 0f) >= 1f;
+        if (!work)
+        {
+            return;
+        }
+
+        // Only the station's owner tends it, so two players never both load the same one. One that another player
+        // owns is claimed now and tended from the next round on.
+        if (!Ownership.Hold(view))
+        {
+            return;
+        }
 
         if (MainConfig.cookingTakeDone.Value)
         {
@@ -158,14 +177,15 @@ internal static class CookingKeeper
                 continue;
             }
 
-            if (station.m_skill != Skills.SkillType.None)
+            if (MainConfig.cookingToChests.Value)
             {
-                Player.m_localPlayer.RaiseSkill(station.m_skill, 0.6f);
-            }
+                // No room in any chest: the food stays on the station until there is (nothing is dropped)
+                GameObject prefab = ObjectDB.instance.GetItemPrefab(item);
+                if (ChestIndex.Put(station.transform.position, MainConfig.cookingChestRange.Value, prefab, 1) < 1)
+                {
+                    continue;
+                }
 
-            GameObject prefab = ObjectDB.instance.GetItemPrefab(item);
-            if (MainConfig.cookingToChests.Value && ChestIndex.Put(station.transform.position, MainConfig.cookingChestRange.Value, prefab, 1) > 0)
-            {
                 // The slot is emptied as the game does it when the food is taken
                 zdo.Set("slot" + i, "");
                 zdo.Set("slot" + i, 0f);
@@ -176,6 +196,11 @@ internal static class CookingKeeper
             else
             {
                 view.InvokeRPC("RPC_RemoveDoneItem", from, 1);
+            }
+
+            if (station.m_skill != Skills.SkillType.None)
+            {
+                Player.m_localPlayer.RaiseSkill(station.m_skill, 0.6f);
             }
         }
     }

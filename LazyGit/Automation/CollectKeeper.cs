@@ -73,8 +73,7 @@ internal static class CollectKeeper
     // Takes what has built up, as a player's click does, but into a chest. What no chest has room for stays where it is.
     private static void Empty(GameObject piece, ZNetView view, ItemDrop product, int most)
     {
-        // Only the owner changes what the piece holds
-        if (view == null || !view.IsValid() || !view.IsOwner() || product == null)
+        if (view == null || !view.IsValid() || product == null)
         {
             return;
         }
@@ -88,6 +87,13 @@ internal static class CollectKeeper
 
         Piece built = piece.GetComponent<Piece>();
         if (built == null || !built.IsPlacedByPlayer())
+        {
+            return;
+        }
+
+        // Only the owner changes what the piece holds. One that another player owns is claimed now and emptied from
+        // the next round on.
+        if (!Ownership.Hold(view))
         {
             return;
         }

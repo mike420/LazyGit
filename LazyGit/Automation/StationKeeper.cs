@@ -73,9 +73,8 @@ internal static class StationKeeper
 
     private static void Stock(Smelter station)
     {
-        // Only the station's owner stocks it, so two players never both fill the same one
         ZNetView view = viewOf(station);
-        if (view == null || !view.IsValid() || !view.IsOwner())
+        if (view == null || !view.IsValid())
         {
             return;
         }
@@ -89,24 +88,34 @@ internal static class StationKeeper
         float range = MainConfig.stationChestRange.Value;
         ZDO zdo = view.GetZDO();
 
-        // Fuel (charcoal for a smelter; none for a windmill or a spinning wheel)
-        if (station.m_fuelItem != null && station.m_maxFuel > 0)
+        // What it has room for: fuel (charcoal for a smelter; none for a windmill or a spinning wheel), and raw
+        // material (whatever the station can turn into something else, up to its queue)
+        int fuelRoom = station.m_fuelItem != null && station.m_maxFuel > 0 ? Mathf.FloorToInt(station.m_maxFuel - zdo.GetFloat(ZDOVars.s_fuel, 0f)) : 0;
+        int oreRoom = station.m_maxOre > 0 ? station.m_maxOre - zdo.GetInt(ZDOVars.s_queued, 0) : 0;
+        if (fuelRoom <= 0 && oreRoom <= 0)
         {
-            int room = Mathf.FloorToInt(station.m_maxFuel - zdo.GetFloat(ZDOVars.s_fuel, 0f));
-            if (room > 0)
+            return;
+        }
+
+        // Only the station's owner stocks it, so two players never both fill the same one. One that another player
+        // owns is claimed now and stocked from the next round on.
+        if (!Ownership.Hold(view))
+        {
+            return;
+        }
+
+        if (fuelRoom > 0)
+        {
+            int got = ChestIndex.Take(station.transform.position, range, station.m_fuelItem.m_itemData.m_shared.m_name, fuelRoom);
+            for (int i = 0; i < got; i++)
             {
-                int got = ChestIndex.Take(station.transform.position, range, station.m_fuelItem.m_itemData.m_shared.m_name, room);
-                for (int i = 0; i < got; i++)
-                {
-                    view.InvokeRPC("RPC_AddFuel");
-                }
+                view.InvokeRPC("RPC_AddFuel");
             }
         }
 
-        // Raw material: whatever the station can turn into something else, up to its queue
-        if (station.m_maxOre > 0)
+        if (oreRoom > 0)
         {
-            int room = station.m_maxOre - zdo.GetInt(ZDOVars.s_queued, 0);
+            int room = oreRoom;
             foreach (Smelter.ItemConversion conversion in station.m_conversion)
             {
                 if (room <= 0)
