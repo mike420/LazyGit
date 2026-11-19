@@ -40,7 +40,7 @@ internal static class CookingKeeper
 
     public static void ListKinds(ZNetScene scene)
     {
-        foreach (GameObject prefab in scene.m_prefabs)
+        foreach (GameObject prefab in MainConfig.VanillaFirst(scene.m_prefabs))
         {
             if (prefab == null)
             {

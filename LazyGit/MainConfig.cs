@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using BepInEx.Configuration;
 using Jotunn.Extensions;
+using UnityEngine;
 
 namespace LazyGit;
 
@@ -136,6 +137,29 @@ internal static class MainConfig
     {
         int index = System.Array.IndexOf(sectionOrder, name);
         return index >= 0 ? $"{index + 1:00} - {name}" : $"99 - {name}";
+    }
+
+    // The pieces that came with the game, as it has them when the world starts, before any mod adds its own: Jotunn
+    // adds the pieces of mods after that. Where a mod has a copy of a piece with the same name, the game's own piece
+    // keeps the plain name in the settings and the copy has its prefab name added.
+    private static readonly HashSet<string> vanillaPrefabs = new HashSet<string>();
+
+    public static void RememberVanilla(ZNetScene scene)
+    {
+        vanillaPrefabs.Clear();
+        foreach (GameObject prefab in scene.m_prefabs)
+        {
+            if (prefab != null)
+            {
+                vanillaPrefabs.Add(prefab.name);
+            }
+        }
+    }
+
+    // The prefabs with the game's own first (the order is kept otherwise), so that they are named first
+    public static IEnumerable<GameObject> VanillaFirst(IEnumerable<GameObject> prefabs)
+    {
+        return prefabs.OrderBy(p => p != null && vanillaPrefabs.Contains(p.name) ? 0 : 1).ToList();
     }
 
     // The on/off switch of one kind of piece, in the "... Types" section of its chore. It is named after the piece as

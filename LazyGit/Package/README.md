@@ -190,7 +190,7 @@ For Nexus downloads you will need to install manually.
 
 ### Manual Install
 
-  * Un-zip and drag the `AuroraBorealis` folder in your `BepInEx/plugins/` folder.
+  * Un-zip and drag the `LazyGit` folder in your `BepInEx/plugins/` folder.
 
 <br>
 

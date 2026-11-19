@@ -39,7 +39,7 @@ internal static class StationKeeper
     // One setting for every kind of station, so each can be switched off on its own
     public static void ListStationKinds(ZNetScene scene)
     {
-        foreach (GameObject prefab in scene.m_prefabs)
+        foreach (GameObject prefab in MainConfig.VanillaFirst(scene.m_prefabs))
         {
             if (prefab == null)
             {

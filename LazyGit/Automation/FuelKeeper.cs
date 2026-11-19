@@ -38,7 +38,7 @@ internal static class FuelKeeper
     // One setting for every piece that burns fuel, so each kind can be switched off on its own
     public static void ListFireKinds(ZNetScene scene)
     {
-        foreach (GameObject prefab in scene.m_prefabs)
+        foreach (GameObject prefab in MainConfig.VanillaFirst(scene.m_prefabs))
         {
             if (prefab == null)
             {

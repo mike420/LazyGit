@@ -205,6 +205,13 @@ internal static class PlantGrowSpacePatch
 [HarmonyPatch(typeof(ZNetScene), "Awake")]
 internal static class ZNetSceneAwakePatch
 {
+    // Before the game's pieces are joined by those of the mods
+    [HarmonyPriority(Priority.First)]
+    private static void Prefix(ZNetScene __instance)
+    {
+        Safe.Run("MainConfig.RememberVanilla", () => MainConfig.RememberVanilla(__instance));
+    }
+
     private static void Postfix(ZNetScene __instance)
     {
         MainConfig.Batch(() =>
