@@ -51,6 +51,11 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*]Filled up in one go once it is below half (a setting), from chests up to [b]30 m[/b] away.
 [*]A [b]switch for each kind of ballista[/b], and the same rules as the other chores.
 [/list]
+### Auto Shield Generators
+[list]
+[*]The [b]shield generators[/b] you built are topped up with their fuel ([b]black cores[/b]) from your chests, so the dome stays up.
+[*]Filled up in one go once the fuel is below half (a setting), from chests up to [b]30 m[/b] away. A [b]switch for each kind of generator[/b], and the same rules as the other chores.
+[/list]
 ### Auto Close Doors
 [list]
 [*]Doors and gates you built that are [b]left open[/b] are closed again once [b]nobody has been near them[/b] for 10 seconds (both settings).
@@ -118,6 +123,10 @@ Press [b]F7[/b] in game to open the settings panel, or edit [b]BepInEx/config/Ma
 [*][b]Chest Range (Auto Ballista)[/b] (default 30): Ballistas take from chests up to this many metres away.
 [*][b]Refill Below (Auto Ballista)[/b] (default 50): A ballista is filled up once its ammunition is below this percentage.
 [*][b]Ballista Types[/b] (default On): One switch for each kind of ballista.
+[*][b]Enable Auto Shield Generators[/b] (default On): Shield generators are topped up with fuel from your chests.
+[*][b]Chest Range (Auto Shield Generators)[/b] (default 30): Shield generators take fuel from chests up to this many metres away.
+[*][b]Refill Below (Auto Shield Generators)[/b] (default 50): A generator is filled up once its fuel is below this percentage.
+[*][b]Shield Generator Types[/b] (default On): One switch for each kind of shield generator.
 [*][b]Enable Auto Close Doors[/b] (default On): Open doors with nobody near them are closed.
 [*][b]Close After[/b] (default 10): Seconds an open door has had nobody near it before it is closed.
 [*][b]Player Distance[/b] (default 6): A door stays open while a player is within this many metres.
