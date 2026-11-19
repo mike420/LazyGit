@@ -38,6 +38,11 @@ internal static class MainConfig
     public static ConfigEntry<bool> fermentTap;
     public static ConfigEntry<bool> fermentToChests;
 
+    // Auto Ballista
+    public static ConfigEntry<bool> ballistaEnabled;
+    public static ConfigEntry<float> ballistaChestRange;
+    public static ConfigEntry<float> ballistaRefillBelow;
+
     public static void Init(ConfigFile config)
     {
         File = config;
@@ -64,6 +69,10 @@ internal static class MainConfig
         fermentLoad = config.BindConfigInOrder("Auto Fermenting", "Fill Empty Fermenters", defaultValue: true, "An empty fermenter takes mead base from the chests.", synced: false, sectionOrder: true, settingOrder: true);
         fermentTap = config.BindConfigInOrder("Auto Fermenting", "Tap Ready Fermenters", defaultValue: true, "A fermenter that is ready is tapped, so it can be filled again.", synced: false, sectionOrder: true, settingOrder: true);
         fermentToChests = config.BindConfigInOrder("Auto Fermenting", "Put Drinks In Chests", defaultValue: true, "The tapped drinks go into a chest within range (one that already has some first, then the nearest). What no chest has room for comes out of the tap.", synced: false, sectionOrder: true, settingOrder: true);
+
+        ballistaEnabled = config.BindConfigInOrder("Auto Ballista", "Enable Auto Ballista", defaultValue: true, "Ballistas you built are restocked with bolts from your chests.", synced: false, sectionOrder: true, settingOrder: true);
+        ballistaChestRange = config.BindConfigInOrder("Auto Ballista", "Chest Range", defaultValue: 30f, "A ballista takes ammunition from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        ballistaRefillBelow = config.BindConfigInOrder("Auto Ballista", "Refill Below", defaultValue: 50f, "A ballista is filled up in one go once its ammunition is below this percentage of what it holds. At 100 it is topped up as soon as there is room for a bolt.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
 
         CarryOverOldSections(config);
 

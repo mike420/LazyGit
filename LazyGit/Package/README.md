@@ -40,6 +40,13 @@ More chores will follow in later updates: the aim is that everything tedious in 
   * When a barrel is **ready it is tapped**, and the mead goes **into a chest** (one that already holds some first, then the nearest). What no chest has room for comes out of the tap as usual.
   * A **switch for each kind of fermenter**, and the same rules as the other chores.
 
+### 🏹 Auto Ballista
+
+  * Ballistas you built are **restocked with bolts** from your chests, so the base defends itself without a trip round the walls.
+  * A ballista that has some bolts keeps its kind of bolt; an empty one takes whichever kind the chests have.
+  * Filled up in one go once it is below half (a setting), from chests up to **30 m** away.
+  * A **switch for each kind of ballista**, and the same rules as the other chores.
+
 <br>
 
 ## ⚙️ Settings:
@@ -70,6 +77,10 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Tap Ready Fermenters | On | A ready fermenter is tapped. |
 | Put Drinks In Chests | On | Tapped drinks go into a chest in range; the rest comes out of the tap. |
 | Fermenter Types | On | One switch for each kind of fermenter. |
+| Enable Auto Ballista | On | Ballistas are restocked from your chests. |
+| Chest Range (Auto Ballista) | 30 | Ballistas take from chests up to this many metres away. |
+| Refill Below (Auto Ballista) | 50 | A ballista is filled up once its ammunition is below this percentage. |
+| Ballista Types | On | One switch for each kind of ballista. |
 
 <br>
 

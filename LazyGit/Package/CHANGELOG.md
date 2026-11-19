@@ -14,6 +14,7 @@
             <li>Auto Stations: smelters, blast furnaces, kilns, spinning wheels, windmills and eitr refineries you built are kept stocked with fuel and raw material from nearby chests.</li>
             <li>Auto Cooking: cooking stations and grills you built are loaded with raw food from nearby chests, kept in fuel, and the food that is done is taken off before it burns and put into a chest.</li>
             <li>Auto Fermenting: fermenters you built are filled with mead base from nearby chests, and what is ready is tapped into a chest.</li>
+            <li>Auto Ballista: ballistas you built are restocked with bolts from nearby chests.</li>
         </ul>
     </td>
   </tr>

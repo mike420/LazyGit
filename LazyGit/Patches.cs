@@ -49,6 +49,15 @@ internal static class FermenterAwakePatch
     }
 }
 
+[HarmonyPatch(typeof(Turret), "Awake")]
+internal static class TurretAwakePatch
+{
+    private static void Postfix(Turret __instance)
+    {
+        BallistaKeeper.Track(__instance);
+    }
+}
+
 // Every kind of fire and station gets its own on/off setting, listed once the game knows all its pieces
 [HarmonyPatch(typeof(ZNetScene), "Awake")]
 internal static class ZNetSceneAwakePatch
@@ -59,5 +68,6 @@ internal static class ZNetSceneAwakePatch
         StationKeeper.ListStationKinds(__instance);
         CookingKeeper.ListKinds(__instance);
         FermentKeeper.ListKinds(__instance);
+        BallistaKeeper.ListKinds(__instance);
     }
 }
