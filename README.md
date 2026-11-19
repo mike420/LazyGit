@@ -1,6 +1,6 @@
 # LazyGit
 
-Valheim mod that automates the chores of a base, so a chest can do them for you. Client side only.
+Valheim mod that automates the chores of a base, so a chest can do them for you. Required on the server and on every player.
 
 Written from scratch. The existing automation mods (Auto Fuel, Auto Refill Fires, LazyVikings and others) were only
 used to see how each chore behaves in the game; no code was taken from them.

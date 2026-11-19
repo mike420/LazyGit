@@ -1,7 +1,7 @@
 # LazyGit (Valheim mod)
 
 Automates base chores so a chest does them: fires take fuel from chests first, then stations, ovens, cooking stations,
-fermenters, ballistas, doors and repair. Client side only. Author: MagicMike. Same layout and conventions as the
+fermenters, ballistas, doors and repair. Required on the server and on every client (Jotunn `EveryoneMustHaveMod`, `VersionStrictness.Minor`: the server refuses players without it or with another minor version, and players cannot join a server without it); the chores themselves run in the players' games (the server has no local player). Author: MagicMike. Same layout and conventions as the
 sibling mod `E:\Valheim_Mods\ValheimSkies` (use it as the reference for anything structural).
 
 ## Hard rules

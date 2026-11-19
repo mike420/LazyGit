@@ -9,7 +9,7 @@ namespace LazyGit;
 // Lazy Git: the base looks after itself. Fires and torches take their fuel from nearby chests.
 [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 [BepInDependency("com.jotunn.jotunn", BepInDependency.DependencyFlags.HardDependency)]
-[NetworkCompatibility(CompatibilityLevel.NotEnforced, VersionStrictness.None)]
+[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
 public class LazyGitMod : BaseUnityPlugin
 {
     public const string PluginName = "LazyGit";

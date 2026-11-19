@@ -13,7 +13,7 @@ More chores will follow in later updates: the aim is that everything tedious in 
 [*]A [b]switch for each kind of fire[/b], listed in the settings once you are in a world.
 [*]Only the fires and chests [b]you built[/b] are used: the world's own fires (villages, dungeons) are left alone, as are carts, ships, gravestones, other players' private chests and guild chests, and any chest that is open at the time.
 [*]Optionally uses the fuel you are carrying when the chests run out.
-[*]Works in multiplayer, and is client side: you do not need the server to have it, and it does not change gameplay for anyone else.
+[*]Works in multiplayer. It is [b]required on the server and on every player[/b]: a player without it, or with a different version (1.0 against 1.1), cannot join. The chores are done by the players' games; the server's copy does nothing by itself.
 [*]Translated into 9 languages.
 [/list]
 
