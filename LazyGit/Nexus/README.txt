@@ -173,7 +173,7 @@ Plugin is created to be installed with r2modman or Gale.
 For Nexus downloads you will need to install manually.
 ### Manual Install
 [list]
-[*]Un-zip and drag the [b]AuroraBorealis[/b] folder in your [b]BepInEx/plugins/[/b] folder.
+[*]Un-zip and drag the [b]LazyGit[/b] folder in your [b]BepInEx/plugins/[/b] folder.
 [/list]
 
 [size=5][b]Plugins Created by Magic Mike[/b][/size]
