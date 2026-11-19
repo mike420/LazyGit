@@ -13,7 +13,7 @@ namespace LazyGit;
 public class LazyGitMod : BaseUnityPlugin
 {
     public const string PluginName = "LazyGit";
-    public const string PluginVersion = "1.1.0";
+    public const string PluginVersion = "1.0.0";
     public const string PluginAuthor = "MagicMike";
     internal const string PluginGUID = "MagicMike.LazyGit";
     internal const string PluginCopy = "Copyright © MagicMike 2026";

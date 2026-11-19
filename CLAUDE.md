@@ -41,8 +41,7 @@ Plain `dotnet build` cannot resolve the game references. The game's log is `D:\S
 
 ## Status
 
-Done: project set up, builds; Auto Fuel and Auto Stations (smelters, kilns, spinning wheels, windmills, eitr refineries; v1.1.0) written. **Not yet tested in the game.** Nothing is committed yet, and there is
-no GitHub remote.
+Done: project set up, builds; Auto Fuel and Auto Stations (smelters, kilns, spinning wheels, windmills, eitr refineries) written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: keep the version at 1.0.0 and add new features to the 1.0.0 changelog entry until the first release.**
 
 Next: test both in the game; then the other chore groups (sap extractors and beehives; ovens; cooking stations and auto-pop of cooked food; fermenters; ballista
 restock; auto-close doors; auto repair). Replace the icon.
