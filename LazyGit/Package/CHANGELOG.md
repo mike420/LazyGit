@@ -17,7 +17,10 @@
             <li>Auto Ballista: ballistas you built are restocked with bolts from nearby chests.</li>
             <li>Auto Close Doors: doors and gates you built that are left open are closed once nobody is near them.</li>
             <li>Auto Collect: beehives and sap extractors you built are emptied into nearby chests when full.</li>
-            <li>Auto Repair: worn and damaged pieces you built, near you, are repaired like the hammer does.</li>
+            <li>Auto Repair Buildings: worn and damaged pieces you built, near you, are repaired like the hammer does.</li>
+            <li>Auto Repair Gear: opening a crafting station repairs the equipment in your inventory that it can repair.</li>
+            <li>Auto Shield: a shield is equipped with a one-handed weapon, and put away with a two-handed or ranged one.</li>
+            <li>Auto Replant: a sapling is planted where a tree stump is destroyed, and stumps can disappear by themselves.</li>
         </ul>
     </td>
   </tr>

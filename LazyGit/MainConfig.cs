@@ -55,7 +55,7 @@ internal static class MainConfig
     public static ConfigEntry<bool> collectHoney;
     public static ConfigEntry<bool> collectSap;
 
-    // Auto Repair
+    // Auto Repair Buildings
     public static ConfigEntry<bool> repairEnabled;
     public static ConfigEntry<float> repairRange;
     public static ConfigEntry<float> repairBelow;
@@ -78,6 +78,33 @@ internal static class MainConfig
             File.Save();
         }
     }
+
+    // Auto Repair Gear
+    public static ConfigEntry<bool> gearRepairEnabled;
+
+    // Auto Shield
+    public static ConfigEntry<bool> shieldEnabled;
+    public static ConfigEntry<bool> shieldAutoEquip;
+    public static ConfigEntry<bool> shieldAfterRanged;
+    public static ConfigEntry<bool> shieldUnequipOnTwoHanded;
+    public static ConfigEntry<bool> shieldUnequipOnSheath;
+    public static ConfigEntry<bool> shieldUnequipOnDeselect;
+    public static ConfigEntry<bool> shieldWithAxe;
+    public static ConfigEntry<bool> shieldWithButcherKnife;
+    public static ConfigEntry<string> shieldMode;
+    public static ConfigEntry<string> shieldNamed;
+    public static ConfigEntry<string> shieldWeapons;
+    public static ConfigEntry<string> shieldNever;
+
+    // Auto Replant
+    public static ConfigEntry<bool> replantEnabled;
+    public static ConfigEntry<float> replantChance;
+    public static ConfigEntry<float> replantDelay;
+    public static ConfigEntry<bool> replantRandom;
+    public static ConfigEntry<bool> replantRemoveStumps;
+    public static ConfigEntry<float> replantWorkbenchClearance;
+    public static ConfigEntry<bool> replantSwamp;
+    public static ConfigEntry<bool> replantIgnoreSpace;
 
     public static void Init(ConfigFile config)
     {
@@ -120,9 +147,37 @@ internal static class MainConfig
         collectHoney = config.BindConfigInOrder("Auto Collect", "Collect Honey", defaultValue: true, "Beehives are emptied.", synced: false, sectionOrder: true, settingOrder: true);
         collectSap = config.BindConfigInOrder("Auto Collect", "Collect Sap", defaultValue: true, "Sap extractors are emptied.", synced: false, sectionOrder: true, settingOrder: true);
 
-        repairEnabled = config.BindConfigInOrder("Auto Repair", "Enable Auto Repair", defaultValue: true, "Worn and damaged pieces you built, near you, are repaired for you, the way the hammer repairs them (which needs no materials).", synced: false, sectionOrder: true, settingOrder: true);
-        repairRange = config.BindConfigInOrder("Auto Repair", "Range", defaultValue: 40f, "Pieces up to this many metres from you are repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
-        repairBelow = config.BindConfigInOrder("Auto Repair", "Repair Below", defaultValue: 75f, "A piece is repaired once its health is below this percentage. At 100 every scratch is repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
+        repairEnabled = config.BindConfigInOrder("Auto Repair Buildings", "Enable Auto Repair Buildings", defaultValue: true, "Worn and damaged pieces you built, near you, are repaired for you, the way the hammer repairs them (which needs no materials).", synced: false, sectionOrder: true, settingOrder: true);
+        repairRange = config.BindConfigInOrder("Auto Repair Buildings", "Range", defaultValue: 40f, "Pieces up to this many metres from you are repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        repairBelow = config.BindConfigInOrder("Auto Repair Buildings", "Repair Below", defaultValue: 75f, "A piece is repaired once its health is below this percentage. At 100 every scratch is repaired.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
+
+        gearRepairEnabled = config.BindConfigInOrder("Auto Repair Gear", "Enable Auto Repair Gear", defaultValue: true, "Opening a crafting station repairs the equipment in your inventory that the station can repair, including what you are not wearing. The game's own rules and costs apply: a workbench does not repair forge gear.", synced: false, sectionOrder: true, settingOrder: true);
+
+        shieldEnabled = config.BindConfigInOrder("Auto Shield", "Enable Auto Shield", defaultValue: true, "Drawing a one-handed weapon equips a shield with it.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldAutoEquip = config.BindConfigInOrder("Auto Shield", "Equip With One-Handed Weapons", defaultValue: true, "A shield is equipped whenever a one-handed weapon is.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldAfterRanged = config.BindConfigInOrder("Auto Shield", "Equip After Bow Or Crossbow", defaultValue: true, "Also equips a shield when you change from a bow, crossbow or other two-handed weapon to a one-handed one, even if the setting above is Off.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldUnequipOnTwoHanded = config.BindConfigInOrder("Auto Shield", "Put Away With Two-Handed Weapons", defaultValue: true, "The shield is put back in your inventory when a two-handed or ranged weapon is equipped.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldUnequipOnSheath = config.BindConfigInOrder("Auto Shield", "Put Away When Sheathing", defaultValue: false, "If On, sheathing your weapon (R) also puts the shield away, so only the weapon is on your back. If Off, both are shown on your back as in the game.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldUnequipOnDeselect = config.BindConfigInOrder("Auto Shield", "Put Away When Weapon Is Deselected", defaultValue: true, "The shield is put away when you put a one-handed weapon away with its hotbar key (not when you equip a shield on its own, and not when you throw a spear).", synced: false, sectionOrder: true, settingOrder: true);
+        shieldWithAxe = config.BindConfigInOrder("Auto Shield", "Equip With Axes", defaultValue: false, "If Off, a one-handed axe gets no shield (so you can chop trees), and the shield is put away.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldWithButcherKnife = config.BindConfigInOrder("Auto Shield", "Equip With Butcher Knife", defaultValue: false, "If Off, the butcher knife gets no shield (for skinning), and the shield is put away.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldMode = config.BindConfigInOrder("Auto Shield", "Shield Choice", defaultValue: "First", "Which shield is equipped. First: the first one in your inventory. Best: the one that blocks best. Preferred: the one named below, or the best if you do not carry it.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueList<string>("First", "Best", "Preferred"));
+        shieldNamed = config.BindConfigInOrder("Auto Shield", "Preferred Shield", defaultValue: "", "The shield used when the choice is Preferred, by its prefab name (for example ShieldWood).", synced: false, sectionOrder: true, settingOrder: true);
+        shieldWeapons = config.BindConfigInOrder("Auto Shield", "Weapons", defaultValue: "", "Only these one-handed weapons get a shield: a list, separated by commas, of weapon types, skills or prefab names. Empty: all of them.", synced: false, sectionOrder: true, settingOrder: true);
+        shieldNever = config.BindConfigInOrder("Auto Shield", "Never Use These Shields", defaultValue: "", "Shields that are never equipped automatically: a list of prefab names, separated by commas.", synced: false, sectionOrder: true, settingOrder: true);
+        foreach (ConfigEntry<string> choice in new[] { shieldMode, shieldNamed, shieldNever })
+        {
+            choice.SettingChanged += (_, __) => ShieldKeeper.Reapply();
+        }
+
+        replantEnabled = config.BindConfigInOrder("Auto Replant", "Enable Auto Replant", defaultValue: true, "A sapling is planted where a tree stump is destroyed, so the forest grows back. No seeds are needed.", synced: false, sectionOrder: true, settingOrder: true);
+        replantChance = config.BindConfigInOrder("Auto Replant", "Replant Chance", defaultValue: 100f, "The chance, in percent, that a tree is replanted.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 100f));
+        replantDelay = config.BindConfigInOrder("Auto Replant", "Delay", defaultValue: 2.5f, "Seconds to wait before the sapling is planted.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 60f));
+        replantRandom = config.BindConfigInOrder("Auto Replant", "Random Sapling", defaultValue: false, "If On, a sapling of a random kind is planted, not one of the kind that was cut.", synced: false, sectionOrder: true, settingOrder: true);
+        replantRemoveStumps = config.BindConfigInOrder("Auto Replant", "Remove Stumps", defaultValue: true, "Stumps disappear by themselves as soon as a tree is cut down (and the sapling is planted then).", synced: false, sectionOrder: true, settingOrder: true);
+        replantWorkbenchClearance = config.BindConfigInOrder("Auto Replant", "Keep Clear Of Workbenches", defaultValue: 0f, "No sapling is planted within this many metres of a workbench. 0 turns this off.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 100f));
+        replantSwamp = config.BindConfigInOrder("Auto Replant", "Replant Swamp Trees", defaultValue: true, "Ancient (swamp) trees are replanted too.", synced: false, sectionOrder: true, settingOrder: true);
+        replantIgnoreSpace = config.BindConfigInOrder("Auto Replant", "Ignore Growth Space", defaultValue: false, "If On, saplings grow even when there is not enough room around them.", synced: false, sectionOrder: true, settingOrder: true);
 
         CarryOverOldSections(config);
 

@@ -1,8 +1,8 @@
 # 🦥 Lazy Git
 
-Your base looks after itself. Fires, smelters, cooking stations, fermenters, ballistas, beehives and sap extractors are kept stocked from your chests, doors close behind you, and damage is repaired, so you never have to walk round with a stack of wood again.
+Your base looks after itself. Fires, smelters, cooking stations, fermenters, ballistas, beehives and sap extractors are kept stocked from your chests, doors close behind you, damage is repaired, trees grow back and your shield is on when you draw a sword, so you never have to walk round with a stack of wood again.
 
-Everything tedious in a base is left to a chest. Each chore has its own switch, and works only on what you built, using chests you are allowed to use.
+Everything tedious in a base is left to a chest. Each chore has its own switch. The chest chores work only on what you built, using chests you are allowed to use.
 
 <br>
 
@@ -59,10 +59,29 @@ Everything tedious in a base is left to a chest. Each chore has its own switch, 
   * Emptied when full (a setting), so nothing is wasted. If no chest has room, it stays in the hive or extractor.
   * Honey and sap can each be switched off.
 
-### 🔨 Auto Repair
+### 🔨 Auto Repair Buildings
 
   * Worn and damaged pieces **you built**, within **40 m** of you, are repaired once their health is below **75%** (both settings), the way the hammer repairs them, so it costs no materials.
   * Not in a ward you have no access to, and a badly damaged base is mended over a few rounds rather than all at once.
+
+### 🛠️ Auto Repair Gear
+
+  * **Open a crafting station and your gear is repaired**: no clicking the repair button again and again. Works at the workbench, forge, black forge, galdr table and other stations (including modded ones).
+  * Repairs the equipment in your **inventory**, worn or not. The game's own rules still apply: a workbench does not repair forge gear, undamaged items are left alone and repair costs are unchanged.
+
+### 🛡️ Auto Shield
+
+  * **Drawing a one-handed weapon equips a shield with it**, including after a bow or crossbow. Two-handed and ranged weapons put the shield away.
+  * Choose which shield: the **first** in your inventory, the **best** blocker, or a **named** one. Shields can be put on a never-use list, and the shield can be limited to certain weapons.
+  * **No shield with axes** (so you can chop trees) **or the butcher knife** (for skinning), unless you want one.
+  * Sheathing with R keeps both weapon and shield on your back, or puts the shield away too (a setting). Putting the weapon away with its hotbar key puts the shield away; throwing a spear does not.
+
+### 🌲 Auto Replant
+
+  * A **sapling is planted** where a tree stump is destroyed, so the forest grows back. No seeds needed.
+  * Replant **chance**, a **delay**, an option for a **random sapling**, and **no planting near workbenches** are settings.
+  * **Stumps disappear by themselves** as soon as a tree is cut down (a setting).
+  * Beech, birch, oak, fir, pine, ancient (swamp), yggdrasil, ashwood and snow fir trees are replanted. Only the player who owns the stump plants, so in multiplayer one sapling is planted, not one for each player.
 
 <br>
 
@@ -107,9 +126,30 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Collect At | 100 | A hive or extractor is emptied once it is this percentage full. |
 | Collect Honey | On | Beehives are emptied. |
 | Collect Sap | On | Sap extractors are emptied. |
-| Enable Auto Repair | On | Damaged pieces near you are repaired. |
-| Range | 40 | Pieces up to this many metres from you are repaired. |
-| Repair Below | 75 | A piece is repaired once its health is below this percentage. |
+| Enable Auto Repair Buildings | On | Damaged pieces near you are repaired. |
+| Range (Auto Repair Buildings) | 40 | Pieces up to this many metres from you are repaired. |
+| Repair Below (Auto Repair Buildings) | 75 | A piece is repaired once its health is below this percentage. |
+| Enable Auto Repair Gear | On | Opening a crafting station repairs your gear that it can repair. |
+| Enable Auto Shield | On | A shield is equipped with a one-handed weapon. |
+| Equip With One-Handed Weapons | On | A shield is equipped whenever a one-handed weapon is. |
+| Equip After Bow Or Crossbow | On | Also equips a shield when you change from a bow or other two-handed weapon to a one-handed one. |
+| Put Away With Two-Handed Weapons | On | The shield is put away when a two-handed or ranged weapon is equipped. |
+| Put Away When Sheathing | Off | Sheathing (R) also puts the shield away. |
+| Put Away When Weapon Is Deselected | On | The shield is put away when you put the weapon away with its hotbar key. |
+| Equip With Axes | Off | A one-handed axe gets a shield. |
+| Equip With Butcher Knife | Off | The butcher knife gets a shield. |
+| Shield Choice | First | First in the inventory, Best (blocks most) or Preferred (the one named below). |
+| Preferred Shield | | The prefab name of the shield used when the choice is Preferred, for example `ShieldWood`. |
+| Weapons | | Only these one-handed weapons get a shield (types, skills or prefab names, separated by commas). Empty: all of them. |
+| Never Use These Shields | | Shields never equipped automatically (prefab names, separated by commas). |
+| Enable Auto Replant | On | A sapling is planted where a stump is destroyed. |
+| Replant Chance | 100 | The chance, in percent, that a tree is replanted. |
+| Delay | 2.5 | Seconds before the sapling is planted. |
+| Random Sapling | Off | A sapling of a random kind is planted. |
+| Remove Stumps | On | Stumps disappear as soon as a tree is cut down. |
+| Keep Clear Of Workbenches | 0 | No sapling within this many metres of a workbench. 0 is off. |
+| Replant Swamp Trees | On | Ancient (swamp) trees are replanted too. |
+| Ignore Growth Space | Off | Saplings grow even when there is not enough room around them. |
 
 <br>
 

@@ -26,8 +26,12 @@ public class LazyGitMod : BaseUnityPlugin
     private Harmony harmony;
     private float nextChores;
 
+    // So that code outside the plugin can start coroutines on it
+    internal static LazyGitMod Instance { get; private set; }
+
     public void Awake()
     {
+        Instance = this;
         MainConfig.Init(Config);
         MagicMike.ModSettings.ModSettings.Init(this);
 
@@ -56,6 +60,11 @@ public class LazyGitMod : BaseUnityPlugin
 
     public void Update()
     {
+        if (MainConfig.modEnabled.Value)
+        {
+            ShieldKeeper.Update();
+        }
+
         if (!MainConfig.modEnabled.Value || Player.m_localPlayer == null || ZNet.instance == null || Time.timeScale == 0f || Time.unscaledTime < nextChores)
         {
             return;

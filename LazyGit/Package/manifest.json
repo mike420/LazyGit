@@ -1,6 +1,6 @@
 {
   "name": "LazyGit",
-  "description": "Your base looks after itself: fires, smelters, cooking stations, fermenters, ballistas, beehives and more are kept stocked from your chests, doors close, and damage is repaired.",
+  "description": "Your base looks after itself: fires, smelters, cooking stations, fermenters, ballistas and beehives are kept stocked from your chests, doors close, gear and buildings are repaired, trees replant and shields equip.",
   "version_number": "1.0.0",
   "website_url": "https://discord.gg/mnr36G6J4x",
   "dependencies": [
