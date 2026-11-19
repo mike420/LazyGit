@@ -1,0 +1,10 @@
+{
+  "name": "LazyGit",
+  "description": "Your base looks after itself. Fires and torches take their fuel from nearby chests, so you never have to carry wood round again.",
+  "version_number": "1.1.0",
+  "website_url": "https://discord.gg/mnr36G6J4x",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2360",
+    "ValheimModding-Jotunn-2.30.2"
+  ]
+}
