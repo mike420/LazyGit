@@ -24,6 +24,7 @@ sibling mod `E:\Valheim_Mods\ValheimSkies` (use it as the reference for anything
 - `LazyGit/Automation/FuelKeeper.cs`: Auto Fuel.
 - `LazyGit/Automation/StationKeeper.cs`: Auto Stations (every `Smelter`: fuel via `RPC_AddFuel`, ore via `RPC_AddOre(prefabName, false)`, one call per item; per-kind switches in "Station Types"). Ovens are Smelters, so they are covered here. New .cs files must be added to `LazyGit.csproj` by hand.
 - `LazyGit/Automation/CookingKeeper.cs`: Auto Cooking (every `CookingStation`: fuel `RPC_AddFuel`, raw food `RPC_AddItem(prefabName, false)` per free slot while `IsFireLit` (private, via delegate), done food into a chest via `ChestIndex.Put` (slot cleared through the ZDO) or, if none has room, `RPC_RemoveDoneItem(point, 1)`; switches in "Cooking Station Types").
+- `LazyGit/Automation/FermentKeeper.cs`: Auto Fermenting (every `Fermenter`: empty = `s_content` 0 -> take one `m_from` and `RPC_AddItem(nameHash, false)`; ready = `s_startTime` older than `m_fermentationDuration` -> clear the ZDO like `RPC_Tap` and `ChestIndex.Put` the `m_producedItems`, the rest instantiated at `m_outputPoint`; switches in "Fermenter Types").
 - `LazyGit/Translations.cs` + `Assets/Translations/<Language>/LazyGit.json`: 9 languages (English, Chinese, French, German, Polish, Portuguese_Brazilian, Russian, Spanish, Turkish). Every new message key goes in all 9.
 - `Shared/`: git submodule (`github.com/mike420/ValheimShared`), the F7 settings panel. Needs `git submodule update --init`.
 - `LazyGit/Package/`: Thunderstore README, CHANGELOG, manifest, icon (**icon.png is still a placeholder copied from ValheimSkies**). `Nexus/README.txt` is generated from the Package README by `UpdateNexusReadme.ps1` on Release builds. Add each new feature to the Package README (features + settings table) and the changelog, and bump the version.
@@ -42,7 +43,7 @@ Plain `dotnet build` cannot resolve the game references. The game's log is `D:\S
 
 ## Status
 
-Done: project set up, builds; Auto Fuel and Auto Stations (smelters, ovens, kilns, spinning wheels, windmills, eitr refineries), Auto Cooking written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: keep the version at 1.0.0 and add new features to the 1.0.0 changelog entry until the first release.**
+Done: project set up, builds; Auto Fuel and Auto Stations (smelters, ovens, kilns, spinning wheels, windmills, eitr refineries), Auto Cooking, Auto Fermenting written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: keep the version at 1.0.0 and add new features to the 1.0.0 changelog entry until the first release.**
 
-Next: test both in the game; then the other chore groups (sap extractors and beehives; fermenters; ballista
+Next: test both in the game; then the other chore groups (sap extractors and beehives; ballista
 restock; auto-close doors; auto repair). Replace the icon.

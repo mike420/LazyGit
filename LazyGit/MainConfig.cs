@@ -31,6 +31,13 @@ internal static class MainConfig
     public static ConfigEntry<bool> cookingTakeDone;
     public static ConfigEntry<bool> cookingToChests;
 
+    // Auto Fermenting
+    public static ConfigEntry<bool> fermentEnabled;
+    public static ConfigEntry<float> fermentChestRange;
+    public static ConfigEntry<bool> fermentLoad;
+    public static ConfigEntry<bool> fermentTap;
+    public static ConfigEntry<bool> fermentToChests;
+
     public static void Init(ConfigFile config)
     {
         File = config;
@@ -51,6 +58,12 @@ internal static class MainConfig
         cookingLoad = config.BindConfigInOrder("Auto Cooking", "Load Raw Food", defaultValue: true, "Raw food from the chests is put on the station while its fire is lit.", synced: false, sectionOrder: true, settingOrder: true);
         cookingTakeDone = config.BindConfigInOrder("Auto Cooking", "Take Off Cooked Food", defaultValue: true, "Food that is done is taken off before it burns.", synced: false, sectionOrder: true, settingOrder: true);
         cookingToChests = config.BindConfigInOrder("Auto Cooking", "Put Cooked Food In Chests", defaultValue: true, "Cooked food goes into a chest within range (one that already has some first, then the nearest). If no chest has room, or this is Off, it is dropped beside the station.", synced: false, sectionOrder: true, settingOrder: true);
+
+        fermentEnabled = config.BindConfigInOrder("Auto Fermenting", "Enable Auto Fermenting", defaultValue: true, "Fermenters you built are filled with mead base from your chests, and what is ready is tapped into a chest.", synced: false, sectionOrder: true, settingOrder: true);
+        fermentChestRange = config.BindConfigInOrder("Auto Fermenting", "Chest Range", defaultValue: 30f, "A fermenter takes and puts things in chests up to this many metres away.", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        fermentLoad = config.BindConfigInOrder("Auto Fermenting", "Fill Empty Fermenters", defaultValue: true, "An empty fermenter takes mead base from the chests.", synced: false, sectionOrder: true, settingOrder: true);
+        fermentTap = config.BindConfigInOrder("Auto Fermenting", "Tap Ready Fermenters", defaultValue: true, "A fermenter that is ready is tapped, so it can be filled again.", synced: false, sectionOrder: true, settingOrder: true);
+        fermentToChests = config.BindConfigInOrder("Auto Fermenting", "Put Drinks In Chests", defaultValue: true, "The tapped drinks go into a chest within range (one that already has some first, then the nearest). What no chest has room for comes out of the tap.", synced: false, sectionOrder: true, settingOrder: true);
 
         CarryOverOldSections(config);
 

@@ -58,6 +58,7 @@
     <Compile Include="Automation\FuelKeeper.cs" />
     <Compile Include="Automation\StationKeeper.cs" />
     <Compile Include="Automation\CookingKeeper.cs" />
+    <Compile Include="Automation\FermentKeeper.cs" />
     <Compile Include="..\Shared\ModSettings\*.cs">
       <Link>ModSettings\%(Filename)%(Extension)</Link>
     </Compile>

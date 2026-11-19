@@ -34,6 +34,12 @@ More chores will follow in later updates: the aim is that everything tedious in 
   * Ovens are looked after by Auto Stations.
   * A **switch for each kind of cooking station**, and the same rules as the other chores: only what you built, only your chests.
 
+### 🍺 Auto Fermenting
+
+  * Fermentation barrels are **filled with mead base** from your chests as soon as they are empty.
+  * When a barrel is **ready it is tapped**, and the mead goes **into a chest** (one that already holds some first, then the nearest). What no chest has room for comes out of the tap as usual.
+  * A **switch for each kind of fermenter**, and the same rules as the other chores.
+
 <br>
 
 ## ⚙️ Settings:
@@ -58,6 +64,12 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Take Off Cooked Food | On | Done food is taken off before it burns. |
 | Put Cooked Food In Chests | On | Taken-off food goes into a chest in range; if none has room, or Off, it is dropped beside the station. |
 | Cooking Station Types | On | One switch for each kind of cooking station. |
+| Enable Auto Fermenting | On | Fermenters are filled and tapped automatically. |
+| Chest Range (Auto Fermenting) | 30 | Fermenters use chests up to this many metres away. |
+| Fill Empty Fermenters | On | An empty fermenter takes mead base from the chests. |
+| Tap Ready Fermenters | On | A ready fermenter is tapped. |
+| Put Drinks In Chests | On | Tapped drinks go into a chest in range; the rest comes out of the tap. |
+| Fermenter Types | On | One switch for each kind of fermenter. |
 
 <br>
 
