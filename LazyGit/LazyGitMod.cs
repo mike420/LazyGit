@@ -78,6 +78,7 @@ public class LazyGitMod : BaseUnityPlugin
         if (MainConfig.modEnabled.Value)
         {
             Safe.Run("ShieldKeeper.Update", ShieldKeeper.Update);
+            Safe.Run("DoorKeeper.OpenUpdate", DoorKeeper.OpenUpdate);
         }
 
         if (!MainConfig.modEnabled.Value || Player.m_localPlayer == null || ZNet.instance == null || Time.timeScale == 0f || Time.unscaledTime < nextChores)

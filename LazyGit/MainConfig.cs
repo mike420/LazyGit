@@ -50,6 +50,10 @@ internal static class MainConfig
     public static ConfigEntry<float> generatorRefillBelow;
 
     // Auto Close Doors
+    public static ConfigEntry<bool> doorOpenEnabled;
+    public static ConfigEntry<float> doorOpenDistance;
+    public static ConfigEntry<bool> doorPairEnabled;
+    public static ConfigEntry<float> doorPairDistance;
     public static ConfigEntry<bool> doorEnabled;
     public static ConfigEntry<float> doorCloseAfter;
     public static ConfigEntry<float> doorPlayerDistance;
@@ -112,6 +116,10 @@ internal static class MainConfig
     public static ConfigEntry<bool> replantSwamp;
     public static ConfigEntry<bool> replantIgnoreSpace;
 
+    // Auto Egg Pickup
+    public static ConfigEntry<bool> eggEnabled;
+    public static ConfigEntry<bool> eggLeaveWarm;
+
     // The settings sections in the order they appear in the cfg file and in the settings panel. Each chore is followed
     // by the section with the on/off switch of each kind of piece it looks after (bound when a world is loaded).
     // BepInEx writes the cfg file with its sections sorted as text, so the numbers have two digits ("02 - ..."): with
@@ -125,12 +133,13 @@ internal static class MainConfig
         "Auto Fermenting", "Fermenter Types",
         "Auto Ballista", "Ballista Types",
         "Auto Shield Generators", "Shield Generator Types",
-        "Auto Close Doors", "Door Types",
+        "Auto Open Doors", "Auto Close Doors", "Door Types",
         "Auto Collect",
         "Auto Repair Buildings",
         "Auto Repair Gear",
         "Auto Shield",
         "Auto Tree Replant",
+        "Auto Egg Pickup",
     };
 
     public static string Section(string name)
@@ -218,6 +227,10 @@ internal static class MainConfig
         generatorChestRange = config.BindConfigInOrder(Section("Auto Shield Generators"), "Chest Range", defaultValue: 30f, "A shield generator takes its fuel from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
         generatorRefillBelow = config.BindConfigInOrder(Section("Auto Shield Generators"), "Refill Below", defaultValue: 50f, "A shield generator is filled up in one go once its fuel is below this percentage of what it holds. At 100 it is topped up as soon as there is room for a piece of fuel.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
 
+        doorOpenEnabled = config.BindConfigInOrder(Section("Auto Open Doors"), "Enable Auto Open Doors", defaultValue: true, "Doors and gates you built open when you walk up to them. One you close by hand stays closed until you have gone away. Doors that need a key are left alone. Which kinds of door are covered is set in Door Types.", synced: false, sectionOrder: false, settingOrder: true);
+        doorOpenDistance = config.BindConfigInOrder(Section("Auto Open Doors"), "Open Distance", defaultValue: 3f, "A door opens when you are this many metres from its nearest part. (Never more than the Player Distance of Auto Close Doors, or the door would be closed again as it opened.)", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.5f, 10f));
+        doorPairEnabled = config.BindConfigInOrder(Section("Auto Open Doors"), "Pair Double Doors", defaultValue: true, "Two doors of the same kind side by side act as one double door: near either half is near both, so both open together, and both are closed only once nobody is near either (Auto Close Doors too).", synced: false, sectionOrder: false, settingOrder: true);
+        doorPairDistance = config.BindConfigInOrder(Section("Auto Open Doors"), "Pair Distance", defaultValue: 2.5f, "Two doors count as a double door when the gap between them (measured while both are closed) is at most this many metres.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.1f, 10f));
         doorEnabled = config.BindConfigInOrder(Section("Auto Close Doors"), "Enable Auto Close Doors", defaultValue: true, "Doors and gates you built that are left open are closed again once nobody is near them.", synced: false, sectionOrder: false, settingOrder: true);
         doorCloseAfter = config.BindConfigInOrder(Section("Auto Close Doors"), "Close After", defaultValue: 10f, "How many seconds an open door has had nobody near it before it is closed. (Checked every 5 seconds, so it can take a little longer.)", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 300f));
         doorPlayerDistance = config.BindConfigInOrder(Section("Auto Close Doors"), "Player Distance", defaultValue: 6f, "A door is left open while any player is within this many metres of it.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 50f));
@@ -259,6 +272,13 @@ internal static class MainConfig
         replantWorkbenchClearance = config.BindConfigInOrder(Section("Auto Tree Replant"), "Keep Clear Of Workbenches", defaultValue: 0f, "No sapling is planted within this many metres of a workbench. 0 turns this off.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 100f));
         replantSwamp = config.BindConfigInOrder(Section("Auto Tree Replant"), "Replant Swamp Trees", defaultValue: true, "Ancient (swamp) trees are replanted too.", synced: false, sectionOrder: false, settingOrder: true);
         replantIgnoreSpace = config.BindConfigInOrder(Section("Auto Tree Replant"), "Ignore Growth Space", defaultValue: false, "If On, saplings grow even when there is not enough room around them.", synced: false, sectionOrder: false, settingOrder: true);
+
+        eggEnabled = config.BindConfigInOrder(Section("Auto Egg Pickup"), "Enable Auto Egg Pickup", defaultValue: true, "Chicken and Asksvin eggs are picked up when you walk close to them, as other items are when the game's auto pickup is on.", synced: false, sectionOrder: false, settingOrder: true);
+        eggLeaveWarm = config.BindConfigInOrder(Section("Auto Egg Pickup"), "Leave Warm Eggs", defaultValue: false, "If On, an egg that is hatching (warm: near a fire and under a roof) is left where it is. A new egg is picked up only once it has been seen to be cold, a few seconds after it appears.", synced: false, sectionOrder: false, settingOrder: true);
+        foreach (ConfigEntry<bool> egg in new[] { eggEnabled, eggLeaveWarm })
+        {
+            egg.SettingChanged += (_, __) => EggKeeper.Reapply();
+        }
 
         CarryOverOldSections(config);
 

@@ -1,3 +1,5 @@
+![](https://imgup.uk/i/RlDzGrHb.png)
+
 # 🦥 Lazy Git
 
 Your base looks after itself. Fires, smelters, cooking stations, fermenters, ballistas, beehives and sap extractors are kept stocked from your chests, doors close behind you, damage is repaired, trees grow back and your shield is on when you draw a sword, so you never have to walk round with a stack of wood again.
@@ -65,6 +67,13 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * The **shield generators** you built are topped up with their fuel (**black cores**) from your chests, so the dome stays up.
   * Filled up in one go once the fuel is below half (a setting), from chests up to **30 m** away. A **switch for each kind of generator**, and the same rules as the other chores.
 
+### 🚪 Auto Open Doors
+
+  * Doors and gates you built **open when you walk up to them**, away from you, within **3 m** of their nearest part (a setting).
+  * A door you **close by hand stays closed** until you have walked away from it. Doors that need a key, and doors that cannot be closed, are left alone, as are doors in a ward you have no access to.
+  * **Double doors** (two doors of the same kind side by side) act as one: both open together, and both are closed only once nobody is near either half. The gap that counts is a setting.
+  * Which kinds of door are covered is set in **Door Types**, shared with Auto Close Doors. It only works for you: each player opens doors for themselves.
+
 ### 🚪 Auto Close Doors
 
   * Doors and gates you built that are **left open** are closed again once **nobody has been near them** for 10 seconds (both settings).
@@ -100,6 +109,12 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * Replant **chance**, a **delay**, an option for a **random sapling**, and **no planting near workbenches** are settings.
   * **Stumps disappear by themselves** as soon as a tree is cut down (a setting).
   * Beech, birch, oak, fir, pine, ancient (swamp), yggdrasil, ashwood and snow fir trees are replanted. Only the player who owns the stump plants, so in multiplayer one sapling is planted, not one for each player.
+
+### 🥚 Auto Egg Pickup
+
+  * **Chicken and Asksvin eggs are picked up** when you walk close to them, like other items on the ground when the game's auto pickup is on.
+  * Optionally **leave warm eggs** (the ones that are hatching) where they are. A new egg is picked up only once it has been seen to be cold, a few seconds after it appears.
+  * Eggs you drop yourself are not picked up again at once.
 
 <br>
 
@@ -139,6 +154,10 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Chest Range (Auto Shield Generators) | 30 | Shield generators take fuel from chests up to this many metres away. |
 | Refill Below (Auto Shield Generators) | 50 | A generator is filled up once its fuel is below this percentage. |
 | Shield Generator Types | On | One switch for each kind of shield generator. |
+| Enable Auto Open Doors | On | Doors and gates you built open when you walk up to them. |
+| Open Distance | 3 | Metres from the nearest part of a door at which it opens (never more than Player Distance). |
+| Pair Double Doors | On | Two doors of the same kind side by side open and close together. |
+| Pair Distance | 2.5 | The largest gap, in metres, between two doors that still count as a double door. |
 | Enable Auto Close Doors | On | Open doors with nobody near them are closed. |
 | Close After | 10 | Seconds an open door has had nobody near it before it is closed. |
 | Player Distance | 6 | A door stays open while a player is within this many metres. |
@@ -172,6 +191,8 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Keep Clear Of Workbenches | 0 | No sapling within this many metres of a workbench. 0 is off. |
 | Replant Swamp Trees | On | Ancient (swamp) trees are replanted too. |
 | Ignore Growth Space | Off | Saplings grow even when there is not enough room around them. |
+| Enable Auto Egg Pickup | On | Chicken and Asksvin eggs are picked up when you walk close to them. |
+| Leave Warm Eggs | Off | Hatching (warm) eggs are left where they are. |
 
 <br>
 
@@ -196,20 +217,22 @@ For Nexus downloads you will need to install manually.
 
 
 ## 💥 Plugins Created by Magic Mike:
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/CoreWoodExtras">Corewood Extras</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodFortified">Corewood Fortified</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodAdditions">Corewood Additions</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/MyDirtyHoe">My Dirty Hoe</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/ChestPreview">Chest Preview</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/YabbaDabbaDoo">YabbaDabbaDoo</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/AuroraBorealis">Aurora Borealis</a>
   * <a href="https://valheim.hexium.gg/mods/MagicMike/BetterBuildMenu">Better Build Menu</a>
   * <a href="https://valheim.hexium.gg/mods/MagicMike/BetterEquipSlots">Better Equip Slots</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/ExtraInventorySlots">Extra Inventory Slots</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/VillagePlebs">Village Plebs</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodAdditions">Corewood Additions</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/CoreWoodExtras">Corewood Extras</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodFortified">Corewood Fortified</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/ChestPreview">Chest Preview</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/DestroyIt">Destroy It</a>
   * <a href="https://valheim.hexium.gg/mods/MagicMike/EinherjarBodies">Einherjar Bodies</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/ExtraInventorySlots">Extra Inventory Slots</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/MyDirtyHoe">My Dirty Hoe</a>
   * <a href="https://valheim.hexium.gg/mods/MagicMike/ValheimSkies">Valheim Skies</a>
-  * <a href="https://valheim.hexium.gg/mods/MagicMike/AuroraBorealis">Aurora Borealis</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/VanityWardrobe">Vanity Wardrobe</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/VillagePlebs">Village Plebs</a>
+  * <a href="https://valheim.hexium.gg/mods/MagicMike/YabbaDabbaDoo">YabbaDabbaDoo</a>
 
 <br>
 
-## 💬 Comments/Suggestions/Help: <a href="https://www.nexusmods.com/valheim/mods/2806">Nexus</a>, <a href="https://discord.gg/mnr36G6J4x">Discord</a>.
+## 💬 Comments/Suggestions/Help: <a href="https://discord.gg/mnr36G6J4x">Discord</a>.

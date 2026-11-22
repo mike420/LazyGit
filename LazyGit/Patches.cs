@@ -201,6 +201,34 @@ internal static class PlantGrowSpacePatch
     }
 }
 
+// Auto Egg Pickup: eggs are marked for the game's auto pickup when they appear, and warm ones can be kept back
+[HarmonyPatch(typeof(ItemDrop), "Awake")]
+internal static class ItemDropAwakePatch
+{
+    private static void Postfix(ItemDrop __instance)
+    {
+        Safe.Run("EggKeeper.OnItemAwake", () => EggKeeper.OnItemAwake(__instance));
+    }
+}
+
+[HarmonyPatch(typeof(EggGrow), "GrowUpdate")]
+internal static class EggGrowUpdatePatch
+{
+    private static void Postfix(EggGrow __instance)
+    {
+        Safe.Run("EggKeeper.OnGrowUpdate", () => EggKeeper.OnGrowUpdate(__instance));
+    }
+}
+
+[HarmonyPatch(typeof(ItemDrop), "OnPlayerDrop")]
+internal static class ItemDropOnPlayerDropPatch
+{
+    private static void Postfix(ItemDrop __instance)
+    {
+        Safe.Run("EggKeeper.OnPlayerDrop", () => EggKeeper.OnPlayerDrop(__instance));
+    }
+}
+
 // Every kind of fire and station gets its own on/off setting, listed once the game knows all its pieces
 [HarmonyPatch(typeof(ZNetScene), "Awake")]
 internal static class ZNetSceneAwakePatch
