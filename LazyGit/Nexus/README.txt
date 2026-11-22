@@ -106,6 +106,23 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*]Optionally [b]leave warm eggs[/b] (the ones that are hatching) where they are. A new egg is picked up only once it has been seen to be cold, a few seconds after it appears.
 [*]Eggs you drop yourself are not picked up again at once.
 [/list]
+### Auto Farming
+[list]
+[*]Crops that have [b]grown[/b] are [b]harvested into a chest[/b] within [b]30 m[/b] (a setting): one that already holds some first, then the nearest. The harvest is what a click gives, including the chance of more with farming skill. If no chest has room, the crop stays on the field until there is.
+[*]The [b]same plant is planted again[/b] where the crop stood, with the [b]seeds from your chests[/b] (a setting). With no seeds the spot is left empty.
+[*]A [b]switch for each crop[/b]. Wild bushes and mushrooms are left alone, and so are crops that give extra items besides their harvest.
+[/list]
+### Auto Light Fires
+[list]
+[*]Fires you built that the game lets you [b]switch on and off[/b] are [b]lit when it gets dark[/b] and [b]put out in daylight[/b] (a setting), which saves their fuel.
+[*]A fire is switched once at each change from day to night and back, so one you switch by hand in between stays as you left it. A fire with no fuel is not lit, and a wet one is left to the game.
+[*]A [b]switch for each kind of fire[/b].
+[/list]
+### Auto Tidy
+[list]
+[*][b]Stackable items lying on the ground[/b] beside your [b]smelters, kilns, cooking stations and fermenters[/b] (what they turn out) are [b]put in a chest[/b]. A stack goes in whole, or stays where it is.
+[*]Items you dropped yourself, eggs being left to hatch, and anything that is not stackable (weapons, armour) are left alone. How close to a station, how long to wait and how far the chests may be are settings.
+[/list]
 
 [size=5][b]Settings[/b][/size]
 
@@ -180,6 +197,17 @@ Press [b]F7[/b] in game to open the settings panel, or edit [b]BepInEx/config/Ma
 [*][b]Ignore Growth Space[/b] (default Off): Saplings grow even when there is not enough room around them.
 [*][b]Enable Auto Egg Pickup[/b] (default On): Chicken and Asksvin eggs are picked up when you walk close to them.
 [*][b]Leave Warm Eggs[/b] (default Off): Hatching (warm) eggs are left where they are.
+[*][b]Enable Auto Farming[/b] (default On): Grown crops are harvested into your chests and planted again.
+[*][b]Chest Range (Auto Farming)[/b] (default 30): Crops go into chests, and seeds come from them, up to this many metres away.
+[*][b]Plant Again[/b] (default On): The same plant is planted again with the seeds from the chests.
+[*][b]Crop Types[/b] (default On): One switch for each crop.
+[*][b]Enable Auto Light Fires[/b] (default On): Fires you built that can be switched on and off are lit when it gets dark.
+[*][b]Put Out In Daylight[/b] (default On): The fires are put out when the day comes.
+[*][b]Light Types[/b] (default On): One switch for each kind of fire.
+[*][b]Enable Auto Tidy[/b] (default On): Stackable items beside your stations are put in a chest.
+[*][b]Chest Range (Auto Tidy)[/b] (default 30): The items go into chests up to this many metres away.
+[*][b]Station Distance[/b] (default 4): Only items within this many metres of one of your stations are tidied.
+[*][b]Wait[/b] (default 5): Seconds an item lies on the ground before it is tidied.
 [/list]
 
 [size=5][b]Translations[/b][/size]
