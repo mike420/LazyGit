@@ -101,6 +101,10 @@ internal static class StationKeeper
         int oreRoom = station.m_maxOre > 0 ? station.m_maxOre - zdo.GetInt(ZDOVars.s_queued, 0) : 0;
         bool fuelWork = fuelRoom > 0 && ChestIndex.Has(station.transform.position, range, station.m_fuelItem.m_itemData.m_shared.m_name);
         bool oreWork = oreRoom > 0 && station.m_conversion.Any(c => c.m_from != null && ChestIndex.Has(station.transform.position, range, c.m_from.m_itemData.m_shared.m_name));
+        if (MainConfig.debugLog.Value)
+        {
+            Jotunn.Logger.LogInfo($"[{LazyGitMod.PluginName}] Station {Utils.GetPrefabName(station.gameObject)} at {station.transform.position}: fuel {zdo.GetFloat(ZDOVars.s_fuel, 0f)}/{station.m_maxFuel}, queue {zdo.GetInt(ZDOVars.s_queued, 0)}/{station.m_maxOre}, fuel work {fuelWork}, ore work {oreWork}, owner {view.IsOwner()}, range {range}");
+        }
         if (!fuelWork && !oreWork)
         {
             return;   // (nothing to put in that the chests have: the station is not claimed)

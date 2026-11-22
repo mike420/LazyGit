@@ -142,6 +142,7 @@ Press **F7** in game to open the settings panel, or edit `BepInEx/config/MagicMi
 | Setting | Default | What it does |
 |---|---|---|
 | Enable Plugin | On | Turns the mod on or off. Needs a restart. |
+| Debug Log | Off | Auto Stations writes what it sees and decides to the log, for finding out why something is not working. |
 | Enable Auto Fuel | On | Fires take their fuel from your chests. |
 | Chest Range | 30 | Fires take fuel from chests up to this many metres away. |
 | Refill Below | 50 | A fire is filled up once its fuel is below this percentage. At 100 it is topped up whenever there is room for a piece of fuel. |

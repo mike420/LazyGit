@@ -13,6 +13,7 @@ internal static class MainConfig
     public static ConfigFile File;
 
     public static ConfigEntry<bool> modEnabled;
+    public static ConfigEntry<bool> debugLog;
 
     // Auto Fuel
     public static ConfigEntry<bool> fuelEnabled;
@@ -211,6 +212,7 @@ internal static class MainConfig
         File = config;
 
         modEnabled = config.BindConfigInOrder(Section("General Settings"), "Enable Plugin", defaultValue: true, "Enable the LazyGit plugin.\n(Restart required. It is read before the game starts, so it is a local setting).\n", synced: false, sectionOrder: false, settingOrder: true);
+        debugLog = config.BindConfigInOrder(Section("General Settings"), "Debug Log", defaultValue: false, "Write what the chores see and decide to the log (every 5 seconds, so it is a lot). Only for finding out why something is not working.", synced: false, sectionOrder: false, settingOrder: true);
 
         fuelEnabled = config.BindConfigInOrder(Section("Auto Fuel"), "Enable Auto Fuel", defaultValue: true, "Fires, torches, braziers and other fires that burn fuel take their own fuel (wood, resin, ...) from your chests, so you do not have to carry it round the base. Only the fires and torches you built are looked after.", synced: false, sectionOrder: false, settingOrder: true);
         fuelChestRange = config.BindConfigInOrder(Section("Auto Fuel"), "Chest Range", defaultValue: 30f, "A fire takes its fuel from chests up to this many metres away, the nearest first.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));

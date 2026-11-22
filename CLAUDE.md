@@ -63,6 +63,6 @@ Plain `dotnet build` cannot resolve the game references. The game's log is `D:\S
 
 ## Status
 
-Done: project set up, builds; Auto Fuel and Auto Stations (smelters, ovens, kilns, spinning wheels, windmills, eitr refineries), Auto Cooking, Auto Fermenting, Auto Ballista, Auto Shield Generators, Auto Open Doors, Auto Close Doors, Auto Repair Buildings, Auto Collect, Auto Repair Gear, Auto Shield, Auto Replant, Auto Egg Pickup, Auto Farming, Auto Light Fires, Auto Tidy written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: keep the version at 1.0.0 and add new features to the 1.0.0 changelog entry until the first release.**
+Done: project set up, builds; Auto Fuel and Auto Stations (smelters, ovens, kilns, spinning wheels, windmills, eitr refineries), Auto Cooking, Auto Fermenting, Auto Ballista, Auto Shield Generators, Auto Open Doors, Auto Close Doors, Auto Repair Buildings, Auto Collect, Auto Repair Gear, Auto Shield, Auto Replant, Auto Egg Pickup, Auto Farming, Auto Light Fires, Auto Tidy written. **Not yet tested in the game.** Pushed to `github.com/mike420/LazyGit` (`origin`, `main`). **Not released yet: version is 1.0.1 (bumped for the Debug Log setting).**
 
 Next: test every chore in the game. All the chore groups in the first plan are written, and the icon is done.
