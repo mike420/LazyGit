@@ -72,6 +72,9 @@
     <Compile Include="Automation\ShieldKeeper.cs" />
     <Compile Include="Automation\TreeKeeper.cs" />
     <Compile Include="Automation\EggKeeper.cs" />
+    <Compile Include="Automation\CropKeeper.cs" />
+    <Compile Include="Automation\LightKeeper.cs" />
+    <Compile Include="Automation\TidyKeeper.cs" />
     <Compile Include="..\Shared\ModSettings\*.cs">
       <Link>ModSettings\%(Filename)%(Extension)</Link>
     </Compile>

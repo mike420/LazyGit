@@ -1,4 +1,5 @@
-﻿[size=6][b]Lazy Git[/b][/size]
+﻿![](https://imgup.uk/i/RlDzGrHb.png)
+[size=6][b]Lazy Git[/b][/size]
 
 Your base looks after itself. Fires, smelters, cooking stations, fermenters, ballistas, beehives and sap extractors are kept stocked from your chests, doors close behind you, damage is repaired, trees grow back and your shield is on when you draw a sword, so you never have to walk round with a stack of wood again.
 Everything tedious in a base is left to a chest. Each chore has its own switch. The chest chores work only on what you built, using chests you are allowed to use.
@@ -56,17 +57,18 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*]The [b]shield generators[/b] you built are topped up with their fuel ([b]black cores[/b]) from your chests, so the dome stays up.
 [*]Filled up in one go once the fuel is below half (a setting), from chests up to [b]30 m[/b] away. A [b]switch for each kind of generator[/b], and the same rules as the other chores.
 [/list]
+### Auto Open Doors
+[list]
+[*]Doors and gates you built [b]open when you walk up to them[/b], away from you, within [b]3 m[/b] of their nearest part (a setting).
+[*]A door you [b]close by hand stays closed[/b] until you have walked away from it. Doors that need a key, and doors that cannot be closed, are left alone, as are doors in a ward you have no access to.
+[*][b]Double doors[/b] (two doors of the same kind side by side) act as one: both open together, and both are closed only once nobody is near either half. The gap that counts is a setting.
+[*]Which kinds of door are covered is set in [b]Door Types[/b], shared with Auto Close Doors. It only works for you: each player opens doors for themselves.
+[/list]
 ### Auto Close Doors
 [list]
 [*]Doors and gates you built that are [b]left open[/b] are closed again once [b]nobody has been near them[/b] for 10 seconds (both settings).
 [*]Doors that need a key, and doors that cannot be closed, are left alone.
 [*]A [b]switch for each kind of door[/b]. In multiplayer a door is closed by the player who owns it in the game's network, so two players never fight over one.
-[/list]
-### Auto Collect
-[list]
-[*][b]Beehives[/b] and [b]sap extractors[/b] you built are emptied [b]into a chest[/b] within [b]30 m[/b] (a setting): one that already holds some honey or sap first, then the nearest.
-[*]Emptied when full (a setting), so nothing is wasted. If no chest has room, it stays in the hive or extractor.
-[*]Honey and sap can each be switched off.
 [/list]
 ### Auto Repair Buildings
 [list]
@@ -91,6 +93,18 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*]Replant [b]chance[/b], a [b]delay[/b], an option for a [b]random sapling[/b], and [b]no planting near workbenches[/b] are settings.
 [*][b]Stumps disappear by themselves[/b] as soon as a tree is cut down (a setting).
 [*]Beech, birch, oak, fir, pine, ancient (swamp), yggdrasil, ashwood and snow fir trees are replanted. Only the player who owns the stump plants, so in multiplayer one sapling is planted, not one for each player.
+[/list]
+### Auto Collect
+[list]
+[*][b]Beehives[/b] and [b]sap extractors[/b] you built are emptied [b]into a chest[/b] within [b]30 m[/b] (a setting): one that already holds some honey or sap first, then the nearest.
+[*]Emptied when full (a setting), so nothing is wasted. If no chest has room, it stays in the hive or extractor.
+[*]Honey and sap can each be switched off.
+[/list]
+### Auto Egg Pickup
+[list]
+[*][b]Chicken and Asksvin eggs are picked up[/b] when you walk close to them, like other items on the ground when the game's auto pickup is on.
+[*]Optionally [b]leave warm eggs[/b] (the ones that are hatching) where they are. A new egg is picked up only once it has been seen to be cold, a few seconds after it appears.
+[*]Eggs you drop yourself are not picked up again at once.
 [/list]
 
 [size=5][b]Settings[/b][/size]
@@ -127,6 +141,10 @@ Press [b]F7[/b] in game to open the settings panel, or edit [b]BepInEx/config/Ma
 [*][b]Chest Range (Auto Shield Generators)[/b] (default 30): Shield generators take fuel from chests up to this many metres away.
 [*][b]Refill Below (Auto Shield Generators)[/b] (default 50): A generator is filled up once its fuel is below this percentage.
 [*][b]Shield Generator Types[/b] (default On): One switch for each kind of shield generator.
+[*][b]Enable Auto Open Doors[/b] (default On): Doors and gates you built open when you walk up to them.
+[*][b]Open Distance[/b] (default 3): Metres from the nearest part of a door at which it opens (never more than Player Distance).
+[*][b]Pair Double Doors[/b] (default On): Two doors of the same kind side by side open and close together.
+[*][b]Pair Distance[/b] (default 2.5): The largest gap, in metres, between two doors that still count as a double door.
 [*][b]Enable Auto Close Doors[/b] (default On): Open doors with nobody near them are closed.
 [*][b]Close After[/b] (default 10): Seconds an open door has had nobody near it before it is closed.
 [*][b]Player Distance[/b] (default 6): A door stays open while a player is within this many metres.
@@ -160,6 +178,8 @@ Press [b]F7[/b] in game to open the settings panel, or edit [b]BepInEx/config/Ma
 [*][b]Keep Clear Of Workbenches[/b] (default 0): No sapling within this many metres of a workbench. 0 is off.
 [*][b]Replant Swamp Trees[/b] (default On): Ancient (swamp) trees are replanted too.
 [*][b]Ignore Growth Space[/b] (default Off): Saplings grow even when there is not enough room around them.
+[*][b]Enable Auto Egg Pickup[/b] (default On): Chicken and Asksvin eggs are picked up when you walk close to them.
+[*][b]Leave Warm Eggs[/b] (default Off): Hatching (warm) eggs are left where they are.
 [/list]
 
 [size=5][b]Translations[/b][/size]
@@ -179,20 +199,22 @@ For Nexus downloads you will need to install manually.
 [size=5][b]Plugins Created by Magic Mike[/b][/size]
 
 [list]
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/CoreWoodExtras">Corewood Extras</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodFortified">Corewood Fortified</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodAdditions">Corewood Additions</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/MyDirtyHoe">My Dirty Hoe</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/ChestPreview">Chest Preview</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/YabbaDabbaDoo">YabbaDabbaDoo</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/AuroraBorealis">Aurora Borealis</a>
 [*]<a href="https://valheim.hexium.gg/mods/MagicMike/BetterBuildMenu">Better Build Menu</a>
 [*]<a href="https://valheim.hexium.gg/mods/MagicMike/BetterEquipSlots">Better Equip Slots</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/ExtraInventorySlots">Extra Inventory Slots</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/VillagePlebs">Village Plebs</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodAdditions">Corewood Additions</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/CoreWoodExtras">Corewood Extras</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/CorewoodFortified">Corewood Fortified</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/ChestPreview">Chest Preview</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/DestroyIt">Destroy It</a>
 [*]<a href="https://valheim.hexium.gg/mods/MagicMike/EinherjarBodies">Einherjar Bodies</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/ExtraInventorySlots">Extra Inventory Slots</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/MyDirtyHoe">My Dirty Hoe</a>
 [*]<a href="https://valheim.hexium.gg/mods/MagicMike/ValheimSkies">Valheim Skies</a>
-[*]<a href="https://valheim.hexium.gg/mods/MagicMike/AuroraBorealis">Aurora Borealis</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/VanityWardrobe">Vanity Wardrobe</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/VillagePlebs">Village Plebs</a>
+[*]<a href="https://valheim.hexium.gg/mods/MagicMike/YabbaDabbaDoo">YabbaDabbaDoo</a>
 [/list]
 
-[size=5][b]Comments/Suggestions/Help: <a href="https://www.nexusmods.com/valheim/mods/2806">Nexus</a>, <a href="https://discord.gg/mnr36G6J4x">Discord</a>.[/b][/size]
+[size=5][b]Comments/Suggestions/Help: <a href="https://discord.gg/mnr36G6J4x">Discord</a>.[/b][/size]
 

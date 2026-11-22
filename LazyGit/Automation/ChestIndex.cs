@@ -73,6 +73,89 @@ internal static class ChestIndex
         return taken;
     }
 
+    // Takes every one of the items in 'needs' (shared name, amount) from the chests within 'range' of 'at', or nothing at
+    // all: used where only a whole set is any use (the seeds of one plant). If the player's own chests are short but
+    // another player's have what is missing, those are claimed and it is tried again from a later round.
+    public static bool TakeAll(Vector3 at, float range, IList<KeyValuePair<string, int>> needs)
+    {
+        float maxSqr = range * range;
+        List<Container> mine = InRange(Owned(), at, maxSqr).ToList();
+        bool enough = true;
+        foreach (KeyValuePair<string, int> need in needs)
+        {
+            if (mine.Sum(c => c.GetInventory().CountItems(need.Key, -1, false)) < need.Value)
+            {
+                enough = false;
+                foreach (Container chest in InRange(Others(), at, maxSqr).Where(c => c.GetInventory().CountItems(need.Key, -1, false) > 0))
+                {
+                    Ownership.Hold(viewOf(chest));
+                }
+            }
+        }
+        if (!enough)
+        {
+            return false;
+        }
+        foreach (KeyValuePair<string, int> need in needs)
+        {
+            Take(at, range, need.Key, need.Value);
+        }
+        return true;
+    }
+
+    // Whether the chests within 'range' of 'at', the player's own and other players', have room for the whole of a
+    // stack of items as it is (its quality and world level kept). Nothing is put in or claimed.
+    public static bool HasRoomFor(Vector3 at, float range, ItemDrop.ItemData item)
+    {
+        float maxSqr = range * range;
+        return InRange(Owned(), at, maxSqr).Concat(InRange(Others(), at, maxSqr)).Any(c => FitsWhole(c.GetInventory(), item));
+    }
+
+    // Puts a whole stack of items into one chest within 'range' of 'at' (one that already holds the item first, then the
+    // nearest), as it is. All of it goes in or none of it. Returns whether it went in.
+    public static bool PutStack(Vector3 at, float range, ItemDrop.ItemData item)
+    {
+        float maxSqr = range * range;
+        foreach (Container chest in InRange(Owned(), at, maxSqr)
+            .OrderBy(c => c.GetInventory().CountItems(item.m_shared.m_name, -1, false) > 0 ? 0 : 1))
+        {
+            Inventory inventory = chest.GetInventory();
+            if (FitsWhole(inventory, item) && inventory.AddItem(item.Clone()))
+            {
+                return true;
+            }
+        }
+
+        foreach (Container chest in InRange(Others(), at, maxSqr).Where(c => FitsWhole(c.GetInventory(), item)))
+        {
+            Ownership.Hold(viewOf(chest));
+        }
+        return false;
+    }
+
+    // Whether a whole stack surely fits: the stacks of the same kind (same quality and world level) have room for it, or
+    // there is an empty slot, which holds a full stack
+    private static bool FitsWhole(Inventory inventory, ItemDrop.ItemData item)
+    {
+        if (item.m_stack > item.m_shared.m_maxStackSize)
+        {
+            return false;
+        }
+        if (inventory.GetEmptySlots() > 0)
+        {
+            return true;
+        }
+        int room = 0;
+        foreach (ItemDrop.ItemData held in inventory.GetAllItems())
+        {
+            if (held.m_shared.m_name == item.m_shared.m_name && held.m_quality == item.m_quality && held.m_worldLevel == item.m_worldLevel)
+            {
+                room += held.m_shared.m_maxStackSize - held.m_stack;
+            }
+        }
+        return room >= item.m_stack;
+    }
+
     // Whether any chest within 'range' of 'at' holds the item (its shared name), the player's own or another's. Nothing
     // is taken or claimed: a chore asks this before it claims a piece, so that it is claimed only when there is work.
     public static bool Has(Vector3 at, float range, string itemName)

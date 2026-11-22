@@ -10,7 +10,7 @@ namespace LazyGit;
 // Lazy Git: the base looks after itself. Fires and torches take their fuel from nearby chests.
 [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 [BepInDependency("com.jotunn.jotunn", BepInDependency.DependencyFlags.HardDependency)]
-[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
+[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Major)]
 public class LazyGitMod : BaseUnityPlugin
 {
     public const string PluginName = "LazyGit";
@@ -70,6 +70,9 @@ public class LazyGitMod : BaseUnityPlugin
             Safe.Run("DoorKeeper.TrackExisting", DoorKeeper.TrackExisting);
             Safe.Run("RepairKeeper.TrackExisting", RepairKeeper.TrackExisting);
             Safe.Run("CollectKeeper.TrackExisting", CollectKeeper.TrackExisting);
+            Safe.Run("CropKeeper.TrackExisting", CropKeeper.TrackExisting);
+            Safe.Run("LightKeeper.TrackExisting", LightKeeper.TrackExisting);
+            Safe.Run("TidyKeeper.TrackExisting", TidyKeeper.TrackExisting);
         });
     }
 
@@ -124,6 +127,18 @@ public class LazyGitMod : BaseUnityPlugin
         if (MainConfig.collectEnabled.Value)
         {
             Safe.Run("CollectKeeper.DoRound", CollectKeeper.DoRound);
+        }
+        if (MainConfig.cropEnabled.Value)
+        {
+            Safe.Run("CropKeeper.DoRound", CropKeeper.DoRound);
+        }
+        if (MainConfig.lightEnabled.Value)
+        {
+            Safe.Run("LightKeeper.DoRound", LightKeeper.DoRound);
+        }
+        if (MainConfig.tidyEnabled.Value)
+        {
+            Safe.Run("TidyKeeper.DoRound", TidyKeeper.DoRound);
         }
     }
 

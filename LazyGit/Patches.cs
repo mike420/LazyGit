@@ -229,6 +229,34 @@ internal static class ItemDropOnPlayerDropPatch
     }
 }
 
+// Auto Farming, Auto Light Fires, Auto Tidy: the crops, the fires and the items on the ground are listed as they wake up
+[HarmonyPatch(typeof(Pickable), "Awake")]
+internal static class PickableAwakePatch
+{
+    private static void Postfix(Pickable __instance)
+    {
+        Safe.Run("CropKeeper.Track", () => CropKeeper.Track(__instance));
+    }
+}
+
+[HarmonyPatch(typeof(Fireplace), "Awake")]
+internal static class FireplaceLightAwakePatch
+{
+    private static void Postfix(Fireplace __instance)
+    {
+        Safe.Run("LightKeeper.Track", () => LightKeeper.Track(__instance));
+    }
+}
+
+[HarmonyPatch(typeof(ItemDrop), "Awake")]
+internal static class ItemDropTidyAwakePatch
+{
+    private static void Postfix(ItemDrop __instance)
+    {
+        Safe.Run("TidyKeeper.Track", () => TidyKeeper.Track(__instance));
+    }
+}
+
 // Every kind of fire and station gets its own on/off setting, listed once the game knows all its pieces
 [HarmonyPatch(typeof(ZNetScene), "Awake")]
 internal static class ZNetSceneAwakePatch
@@ -251,6 +279,8 @@ internal static class ZNetSceneAwakePatch
             Safe.Run("BallistaKeeper.ListKinds", () => BallistaKeeper.ListKinds(__instance));
             Safe.Run("ShieldGeneratorKeeper.ListKinds", () => ShieldGeneratorKeeper.ListKinds(__instance));
             Safe.Run("DoorKeeper.ListKinds", () => DoorKeeper.ListKinds(__instance));
+            Safe.Run("CropKeeper.ListKinds", () => CropKeeper.ListKinds(__instance));
+            Safe.Run("LightKeeper.ListKinds", () => LightKeeper.ListKinds(__instance));
         });
     }
 }

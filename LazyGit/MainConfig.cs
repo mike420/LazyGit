@@ -116,6 +116,17 @@ internal static class MainConfig
     public static ConfigEntry<bool> replantSwamp;
     public static ConfigEntry<bool> replantIgnoreSpace;
 
+    // Auto Farming, Auto Light Fires, Auto Tidy
+    public static ConfigEntry<bool> cropEnabled;
+    public static ConfigEntry<float> cropChestRange;
+    public static ConfigEntry<bool> cropReplant;
+    public static ConfigEntry<bool> lightEnabled;
+    public static ConfigEntry<bool> lightPutOut;
+    public static ConfigEntry<bool> tidyEnabled;
+    public static ConfigEntry<float> tidyChestRange;
+    public static ConfigEntry<float> tidyStationDistance;
+    public static ConfigEntry<float> tidyWait;
+
     // Auto Egg Pickup
     public static ConfigEntry<bool> eggEnabled;
     public static ConfigEntry<bool> eggLeaveWarm;
@@ -140,6 +151,9 @@ internal static class MainConfig
         "Auto Shield",
         "Auto Tree Replant",
         "Auto Egg Pickup",
+        "Auto Farming", "Crop Types",
+        "Auto Light Fires", "Light Types",
+        "Auto Tidy",
     };
 
     public static string Section(string name)
@@ -275,6 +289,18 @@ internal static class MainConfig
 
         eggEnabled = config.BindConfigInOrder(Section("Auto Egg Pickup"), "Enable Auto Egg Pickup", defaultValue: true, "Chicken and Asksvin eggs are picked up when you walk close to them, as other items are when the game's auto pickup is on.", synced: false, sectionOrder: false, settingOrder: true);
         eggLeaveWarm = config.BindConfigInOrder(Section("Auto Egg Pickup"), "Leave Warm Eggs", defaultValue: false, "If On, an egg that is hatching (warm: near a fire and under a roof) is left where it is. A new egg is picked up only once it has been seen to be cold, a few seconds after it appears.", synced: false, sectionOrder: false, settingOrder: true);
+        cropEnabled = config.BindConfigInOrder(Section("Auto Farming"), "Enable Auto Farming", defaultValue: true, "Crops that have grown are harvested into your chests, and planted again from the seeds in your chests, so the field keeps itself going. Which crops is set in Crop Types.", synced: false, sectionOrder: false, settingOrder: true);
+        cropChestRange = config.BindConfigInOrder(Section("Auto Farming"), "Chest Range", defaultValue: 30f, "The harvest goes into chests up to this many metres away (one that already has some first, then the nearest), and the seeds come from them. If no chest has room, the crop is left to grow ripe on the field until there is.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        cropReplant = config.BindConfigInOrder(Section("Auto Farming"), "Plant Again", defaultValue: true, "The same plant is planted again where the crop stood, using the seeds from the chests. With none there, the spot is left empty.", synced: false, sectionOrder: false, settingOrder: true);
+
+        lightEnabled = config.BindConfigInOrder(Section("Auto Light Fires"), "Enable Auto Light Fires", defaultValue: true, "Fires you built that can be switched on and off are lit when it gets dark. Which kinds is set in Light Types. A fire with no fuel is not lit, and a wet one is left for the game to put out.", synced: false, sectionOrder: false, settingOrder: true);
+        lightPutOut = config.BindConfigInOrder(Section("Auto Light Fires"), "Put Out In Daylight", defaultValue: true, "The fires are put out when the day comes, which saves their fuel. A fire is switched once at each change, so one you switch by hand stays as you left it.", synced: false, sectionOrder: false, settingOrder: true);
+
+        tidyEnabled = config.BindConfigInOrder(Section("Auto Tidy"), "Enable Auto Tidy", defaultValue: true, "Stackable items lying on the ground beside your smelters, kilns, cooking stations and fermenters are put in a chest. Items you dropped yourself, and things that are not stackable (weapons, armour), are left alone.", synced: false, sectionOrder: false, settingOrder: true);
+        tidyChestRange = config.BindConfigInOrder(Section("Auto Tidy"), "Chest Range", defaultValue: 30f, "The items go into chests up to this many metres away (one that already has some first, then the nearest). If no chest has room for all of a stack, it stays where it is.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 200f));
+        tidyStationDistance = config.BindConfigInOrder(Section("Auto Tidy"), "Station Distance", defaultValue: 4f, "Only items within this many metres of one of your stations are tidied.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
+        tidyWait = config.BindConfigInOrder(Section("Auto Tidy"), "Wait", defaultValue: 5f, "Seconds an item lies on the ground before it is tidied, so that it can be picked up by hand first.", synced: false, sectionOrder: false, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 120f));
+
         foreach (ConfigEntry<bool> egg in new[] { eggEnabled, eggLeaveWarm })
         {
             egg.SettingChanged += (_, __) => EggKeeper.Reapply();

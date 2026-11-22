@@ -54,6 +54,13 @@ internal static class StationKeeper
         }
     }
 
+    // Where the stations the player built are (for Auto Tidy)
+    public static IEnumerable<Vector3> Positions()
+    {
+        return stations.Where(s => s != null && s.GetComponent<Piece>() != null && s.GetComponent<Piece>().IsPlacedByPlayer())
+            .Select(s => s.transform.position).ToList();
+    }
+
     public static void DoRound()
     {
         stations.RemoveWhere(station => station == null);
