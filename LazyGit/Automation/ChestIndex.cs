@@ -83,13 +83,14 @@ internal static class ChestIndex
             return 0;
         }
         string itemName = drop.m_itemData.m_shared.m_name;
+        ItemDrop.ItemData probe = AsAdded(drop);
         float maxSqr = range * range;
         int put = 0;
         foreach (Container chest in InRange(Owned(), at, maxSqr)
             .OrderBy(c => c.GetInventory().CountItems(itemName, -1, false) > 0 ? 0 : 1))
         {
             Inventory inventory = chest.GetInventory();
-            while (put < amount && inventory.CanAddItem(prefab, 1) && inventory.AddItem(prefab, 1))
+            while (put < amount && inventory.CanAddItem(probe, 1) && inventory.AddItem(prefab, 1))
             {
                 put++;
             }
@@ -115,7 +116,7 @@ internal static class ChestIndex
         {
             return false;
         }
-        ItemDrop.ItemData item = drop.m_itemData;
+        ItemDrop.ItemData item = AsAdded(drop);
         float maxSqr = range * range;
         int room = 0;
         foreach (Container chest in InRange(Owned(), at, maxSqr))
@@ -131,10 +132,20 @@ internal static class ChestIndex
         return false;
     }
 
+    // The item as Inventory.AddItem(prefab) makes it: stamped with the world level. The game's own room checks for a
+    // prefab look for stack space at world level 0, so in a higher world they would not see the stacks it adds to.
+    private static ItemDrop.ItemData AsAdded(ItemDrop drop)
+    {
+        ItemDrop.ItemData item = drop.m_itemData.Clone();
+        item.m_worldLevel = (byte)Game.m_worldLevel;
+        return item;
+    }
+
     // Another player's chest with room is claimed, and used from a later round on
     private static void ClaimOthersWithRoom(Vector3 at, float maxSqr, GameObject prefab)
     {
-        foreach (Container chest in InRange(Others(), at, maxSqr).Where(c => c.GetInventory().CanAddItem(prefab, 1)))
+        ItemDrop.ItemData probe = AsAdded(prefab.GetComponent<ItemDrop>());
+        foreach (Container chest in InRange(Others(), at, maxSqr).Where(c => c.GetInventory().CanAddItem(probe, 1)))
         {
             Ownership.Hold(viewOf(chest));
         }

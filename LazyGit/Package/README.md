@@ -80,12 +80,6 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * Doors that need a key, and doors that cannot be closed, are left alone.
   * A **switch for each kind of door**. In multiplayer a door is closed by the player who owns it in the game's network, so two players never fight over one.
 
-### 🍯 Auto Collect
-
-  * **Beehives** and **sap extractors** you built are emptied **into a chest** within **30 m** (a setting): one that already holds some honey or sap first, then the nearest.
-  * Emptied when full (a setting), so nothing is wasted. If no chest has room, it stays in the hive or extractor.
-  * Honey and sap can each be switched off.
-
 ### 🔨 Auto Repair Buildings
 
   * Worn and damaged pieces **you built**, within **40 m** of you, are repaired once their health is below **75%** (both settings), the way the hammer repairs them, so it costs no materials.
@@ -109,6 +103,12 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * Replant **chance**, a **delay**, an option for a **random sapling**, and **no planting near workbenches** are settings.
   * **Stumps disappear by themselves** as soon as a tree is cut down (a setting).
   * Beech, birch, oak, fir, pine, ancient (swamp), yggdrasil, ashwood and snow fir trees are replanted. Only the player who owns the stump plants, so in multiplayer one sapling is planted, not one for each player.
+
+### 🍯 Auto Collect
+
+  * **Beehives** and **sap extractors** you built are emptied **into a chest** within **30 m** (a setting): one that already holds some honey or sap first, then the nearest.
+  * Emptied when full (a setting), so nothing is wasted. If no chest has room, it stays in the hive or extractor.
+  * Honey and sap can each be switched off.
 
 ### 🥚 Auto Egg Pickup
 

@@ -18,7 +18,7 @@ internal static class ContainerAwakePatch
 {
     private static void Postfix(Container __instance)
     {
-        ChestIndex.Track(__instance);
+        Safe.Run("ChestIndex.Track", () => ChestIndex.Track(__instance));
     }
 }
 
