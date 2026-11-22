@@ -89,8 +89,9 @@ internal static class FermentKeeper
         float range = MainConfig.fermentChestRange.Value;
         int content = zdo.GetInt(ZDOVars.s_content, 0);
 
-        // Nothing to do while it is fermenting
-        if (content != 0 && !IsReady(fermenter, zdo))
+        // Nothing to do while it is fermenting; nothing that can be done (no mead base in the chests, no room for the
+        // drink) means it is not claimed
+        if (!HasWork(fermenter, zdo, content, range))
         {
             return;
         }
@@ -113,6 +114,23 @@ internal static class FermentKeeper
         {
             Tap(fermenter, zdo, content, range);
         }
+    }
+
+    private static bool HasWork(Fermenter fermenter, ZDO zdo, int content, float range)
+    {
+        Vector3 at = fermenter.transform.position;
+        if (content == 0)
+        {
+            return MainConfig.fermentLoad.Value
+                && fermenter.m_conversion.Any(c => c.m_from != null && ChestIndex.Has(at, range, c.m_from.m_itemData.m_shared.m_name));
+        }
+        if (!MainConfig.fermentTap.Value || !IsReady(fermenter, zdo))
+        {
+            return false;
+        }
+        Fermenter.ItemConversion conversion = fermenter.m_conversion.FirstOrDefault(c => c.m_from != null && c.m_from.gameObject.name.GetStableHashCode() == content);
+        return conversion == null || conversion.m_to == null || !MainConfig.fermentToChests.Value
+            || ChestIndex.HasRoom(at, range, conversion.m_to.gameObject, conversion.m_producedItems);
     }
 
     // Fills an empty fermenter with the first thing the chests have that it can ferment

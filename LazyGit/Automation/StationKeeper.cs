@@ -92,9 +92,11 @@ internal static class StationKeeper
         // material (whatever the station can turn into something else, up to its queue)
         int fuelRoom = station.m_fuelItem != null && station.m_maxFuel > 0 ? Mathf.FloorToInt(station.m_maxFuel - zdo.GetFloat(ZDOVars.s_fuel, 0f)) : 0;
         int oreRoom = station.m_maxOre > 0 ? station.m_maxOre - zdo.GetInt(ZDOVars.s_queued, 0) : 0;
-        if (fuelRoom <= 0 && oreRoom <= 0)
+        bool fuelWork = fuelRoom > 0 && ChestIndex.Has(station.transform.position, range, station.m_fuelItem.m_itemData.m_shared.m_name);
+        bool oreWork = oreRoom > 0 && station.m_conversion.Any(c => c.m_from != null && ChestIndex.Has(station.transform.position, range, c.m_from.m_itemData.m_shared.m_name));
+        if (!fuelWork && !oreWork)
         {
-            return;
+            return;   // (nothing to put in that the chests have: the station is not claimed)
         }
 
         // Only the station's owner stocks it, so two players never both fill the same one. One that another player

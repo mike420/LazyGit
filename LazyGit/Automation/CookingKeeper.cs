@@ -89,15 +89,9 @@ internal static class CookingKeeper
         ZDO zdo = view.GetZDO();
         float range = MainConfig.cookingChestRange.Value;
 
-        // Is there anything to do here: food to take off, a free slot, room for fuel?
-        bool work = false;
-        for (int i = 0; i < station.m_slots.Length && !work; i++)
-        {
-            string item = zdo.GetString("slot" + i, "");
-            work = item == "" || IsDone(station, item);
-        }
-        work |= station.m_useFuel && station.m_fuelItem != null && station.m_maxFuel > 0 && station.m_maxFuel - zdo.GetFloat(ZDOVars.s_fuel, 0f) >= 1f;
-        if (!work)
+        // Is there anything to do here that can be done: food to take off (with a chest to go to), a free slot and raw
+        // food in the chests, room for fuel and fuel in the chests? Only then is the station claimed.
+        if (!HasWork(station, zdo, range))
         {
             return;
         }
@@ -131,6 +125,35 @@ internal static class CookingKeeper
         {
             Load(station, view, zdo, range);
         }
+    }
+
+    private static bool HasWork(CookingStation station, ZDO zdo, float range)
+    {
+        Vector3 at = station.transform.position;
+        bool freeSlot = false;
+        for (int i = 0; i < station.m_slots.Length; i++)
+        {
+            string item = zdo.GetString("slot" + i, "");
+            if (item == "")
+            {
+                freeSlot = true;
+            }
+            else if (MainConfig.cookingTakeDone.Value && IsDone(station, item)
+                && (!MainConfig.cookingToChests.Value || ChestIndex.HasRoom(at, range, ObjectDB.instance.GetItemPrefab(item), 1)))
+            {
+                return true;
+            }
+        }
+
+        if (freeSlot && MainConfig.cookingLoad.Value && (!station.m_requireFire || fireIsLit(station))
+            && station.m_conversion.Any(c => c.m_from != null && ChestIndex.Has(at, range, c.m_from.m_itemData.m_shared.m_name)))
+        {
+            return true;
+        }
+
+        return station.m_useFuel && station.m_fuelItem != null && station.m_maxFuel > 0
+            && station.m_maxFuel - zdo.GetFloat(ZDOVars.s_fuel, 0f) >= 1f
+            && ChestIndex.Has(at, range, station.m_fuelItem.m_itemData.m_shared.m_name);
     }
 
     // Puts raw food in every free slot, as far as the chests have any

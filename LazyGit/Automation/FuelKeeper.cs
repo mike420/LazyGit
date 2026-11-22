@@ -115,6 +115,14 @@ internal static class FuelKeeper
             return 0;
         }
 
+        // Only a fire that fuel can be found for is claimed: with none in reach there is no work here
+        string fuelName = fire.m_fuelItem.m_itemData.m_shared.m_name;
+        if (!ChestIndex.Has(fire.transform.position, MainConfig.fuelChestRange.Value, fuelName)
+            && !(MainConfig.fuelFromInventory.Value && Player.m_localPlayer.GetInventory().CountItems(fuelName, -1, false) > 0))
+        {
+            return 0;
+        }
+
         // Only the fire's owner feeds it, so two players never both fill the same fire. One that another player owns
         // is claimed now and fed from the next round on.
         if (!Ownership.Hold(view))
@@ -122,7 +130,6 @@ internal static class FuelKeeper
             return 0;
         }
 
-        string fuelName = fire.m_fuelItem.m_itemData.m_shared.m_name;
         int got = ChestIndex.Take(fire.transform.position, MainConfig.fuelChestRange.Value, fuelName, room);
         if (got < room && MainConfig.fuelFromInventory.Value)
         {

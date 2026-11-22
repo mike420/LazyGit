@@ -73,6 +73,39 @@ internal static class ChestIndex
         return taken;
     }
 
+    // Whether any chest within 'range' of 'at' holds the item (its shared name), the player's own or another's. Nothing
+    // is taken or claimed: a chore asks this before it claims a piece, so that it is claimed only when there is work.
+    public static bool Has(Vector3 at, float range, string itemName)
+    {
+        float maxSqr = range * range;
+        return InRange(Owned(), at, maxSqr).Concat(InRange(Others(), at, maxSqr))
+            .Any(c => c.GetInventory().CountItems(itemName, -1, false) > 0);
+    }
+
+    // Whether the chests within 'range' of 'at', the player's own and other players', have room for 'amount' of an item
+    // (its prefab) between them. Nothing is put in or claimed (see Has).
+    public static bool HasRoom(Vector3 at, float range, GameObject prefab, int amount)
+    {
+        ItemDrop drop = prefab != null ? prefab.GetComponent<ItemDrop>() : null;
+        if (drop == null)
+        {
+            return false;
+        }
+        ItemDrop.ItemData item = AsAdded(drop);
+        float maxSqr = range * range;
+        int room = 0;
+        foreach (Container chest in InRange(Owned(), at, maxSqr).Concat(InRange(Others(), at, maxSqr)))
+        {
+            Inventory inventory = chest.GetInventory();
+            room += inventory.FindFreeStackSpace(item.m_shared.m_name, item.m_worldLevel) + inventory.GetEmptySlots() * item.m_shared.m_maxStackSize;
+            if (room >= amount)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Puts up to 'amount' of an item (its prefab) into the chests within 'range' of 'at'. A chest that already holds
     // the item is used first, then the nearest. Returns how many were put in; what does not fit is left with the caller.
     public static int Put(Vector3 at, float range, GameObject prefab, int amount)

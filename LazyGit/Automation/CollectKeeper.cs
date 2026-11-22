@@ -91,6 +91,13 @@ internal static class CollectKeeper
             return;
         }
 
+        // Only a piece that a chest has room for the product of is claimed
+        int perUnit = Mathf.Max(1, Game.instance.ScaleDrops(product.m_itemData, 1));
+        if (!ChestIndex.HasRoom(piece.transform.position, MainConfig.collectChestRange.Value, product.gameObject, 1))
+        {
+            return;
+        }
+
         // Only the owner changes what the piece holds. One that another player owns is claimed now and emptied from
         // the next round on.
         if (!Ownership.Hold(view))
@@ -98,7 +105,6 @@ internal static class CollectKeeper
             return;
         }
 
-        int perUnit = Mathf.Max(1, Game.instance.ScaleDrops(product.m_itemData, 1));
         int put = ChestIndex.Put(piece.transform.position, MainConfig.collectChestRange.Value, product.gameObject, level * perUnit);
         if (put < 1)
         {

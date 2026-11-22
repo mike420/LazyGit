@@ -97,6 +97,12 @@ internal static class ShieldGeneratorKeeper
             return;
         }
 
+        // Only a generator that the chests have fuel for is claimed
+        if (!generator.m_fuelItems.Any(f => ChestIndex.Has(generator.transform.position, MainConfig.generatorChestRange.Value, f.m_itemData.m_shared.m_name)))
+        {
+            return;
+        }
+
         // Only the generator's owner fuels it, so two players never both fill the same one. One that another player
         // owns is claimed now and fuelled from the next round on.
         if (!Ownership.Hold(view))

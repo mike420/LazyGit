@@ -103,13 +103,6 @@ internal static class BallistaKeeper
             return;
         }
 
-        // Only the turret's owner loads it, so two players never both fill the same one. One that another player
-        // owns is claimed now and loaded from the next round on.
-        if (!Ownership.Hold(view))
-        {
-            return;
-        }
-
         // A loaded turret keeps the kind of bolt it holds; an empty one takes whichever kind the chests have
         List<ItemDrop> kindsToTry = new List<ItemDrop>();
         if (have > 0 || turret.m_defaultAmmo != null)
@@ -125,6 +118,20 @@ internal static class BallistaKeeper
         else
         {
             kindsToTry.AddRange(turret.m_allowedAmmo.Select(a => a.m_ammo).Where(a => a != null));
+        }
+
+        // Only a turret that the chests have bolts for is claimed
+        float range = MainConfig.ballistaChestRange.Value;
+        if (!kindsToTry.Any(k => ChestIndex.Has(turret.transform.position, range, k.m_itemData.m_shared.m_name)))
+        {
+            return;
+        }
+
+        // Only the turret's owner loads it, so two players never both fill the same one. One that another player
+        // owns is claimed now and loaded from the next round on.
+        if (!Ownership.Hold(view))
+        {
+            return;
         }
 
         foreach (ItemDrop kind in kindsToTry)
