@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.0.2</td>
+    <td>
+    <ul>
+      <li>Valheim 1.0.30 update.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.0.1</td>
     <td>
         <ul>

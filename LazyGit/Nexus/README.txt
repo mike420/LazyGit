@@ -129,6 +129,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 Press [b]F7[/b] in game to open the settings panel, or edit [b]BepInEx/config/MagicMike.LazyGit.cfg[/b].
 [list]
 [*][b]Enable Plugin[/b] (default On): Turns the mod on or off. Needs a restart.
+[*][b]Debug Log[/b] (default Off): Auto Stations writes what it sees and decides to the log, for finding out why something is not working.
 [*][b]Enable Auto Fuel[/b] (default On): Fires take their fuel from your chests.
 [*][b]Chest Range[/b] (default 30): Fires take fuel from chests up to this many metres away.
 [*][b]Refill Below[/b] (default 50): A fire is filled up once its fuel is below this percentage. At 100 it is topped up whenever there is room for a piece of fuel.
